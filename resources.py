@@ -44,48 +44,46 @@ class RukunTetangga(Resource):
         return
 
     def get(self):
-        emp_number = get_raw_jwt()['identity']
-        attachment = models.Attachment(emp_number, self.screen)
+        norumah = get_raw_jwt()['identity']
+        rt = models.RukunTetangga()
         parser = reqparse.RequestParser()
         parser.add_argument(
-            'file_id', help='This field cannot be blank', required=True, location=["form", "args"])
+            'kdrt', help='This field cannot be blank', required=True, location=["form", "args"])
         data = parser.parse_args()
         try:
-            if data["file_id"] == "all":
+            if data["kdrt"] == "all":
                 result = []
-                for attachment in attachment.get_meta_all():
+                for rt in rt.get_all():
                     result.append(
                         {
-                            "file_id": str(attachment[1]),
-                            "comment": attachment[2],
-                            "file_name": attachment[3],
-                            "size": str(attachment[4]),
-                            "type": attachment[5],
-                            "date_added": attachment[9]
+                            "kdrt": rt[0],
+                            "kdrw": rt[1],
+                            "nmrt": rt[2],
+                            "alamat": rt[3]
                         }
                     )
                 return {
                     "data": result,
-                    "message": "Files succesfully retrieved"
+                    "message": "RTs succesfully retrieved"
                 }
             else:
-                result = attachment.get(data["file_id"])
+                body = {
+                    "kdrt": data["kdrt"]
+                }
+                result = rt.get(body)
                 if result is None:
                     return {
-                        "message": "File not found"
+                        "message": "RT not found"
                     }, 400
                 else:
                     return {
                         "data": {
-                            "file_id": result[1],
-                            "file": b64encode(result[5]).decode(),
-                            "comment": result[2],
-                            "file_name": result[3],
-                            "size": result[4],
-                            "type": result[6],
-                            "date_added": result[10]
+                            "kdrt": result[0],
+                            "kdrw": result[1],
+                            "nmrt": result[2],
+                            "alamat": result[3]
                         },
-                        "message": "File succesfully retrieved"
+                        "message": "RT succesfully retrieved"
                     }
         except Exception as e:
             print(e)
