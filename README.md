@@ -2,8 +2,20 @@
 HTTP REST API PoC for KASRT written in Python 3. 
 
 # To-do
-* One
-* Two
+* models.RukunTetangga [done]
+* models.Warga [done]
+* models.Pemasukan [done]
+* models.Pengeluaran [done]
+* models.Iuran [done]
+* models.SaldoKas [done]
+* resources.Login [done]
+* resources.RukunTetangga [done]
+* resources.Warga [done]
+* resources.Pemasukan [done]
+* resources.Pengeluaran [on-progress]
+* resources.Iuran [on-progress]
+* resources.SaldoKas [on-progress]
+* Auth & Permission [on-progress]
 
 # To use: 
 1. Clone the repo. 
