@@ -102,7 +102,7 @@ class Warga:
 
 class RukunTetangga:
     def get(self, body):
-        field = "`kdrt`, `nmrt`, `kdrw`, `nmrt`, `alamat`"
+        field = "`kdrt`, `nmrt`, `kdrw`, `alamat`"
         table = "`rt`"
         sql_filter = "`nmrt` = '%s'" % body["nmrt"]
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
