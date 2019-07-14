@@ -56,9 +56,9 @@ class RukunTetangga(Resource):
                 for rt in rt.get_all():
                     result.append(
                         {
-                            "kdrt": rt[0],
-                            "kdrw": rt[1],
-                            "nmrt": rt[2],
+                            "kdrt": str(rt[0]),
+                            "kdrw": str(rt[1]),
+                            "nmrt": str(rt[2]),
                             "alamat": rt[3]
                         }
                     )
@@ -78,9 +78,9 @@ class RukunTetangga(Resource):
                 else:
                     return {
                         "data": {
-                            "kdrt": result[0],
-                            "kdrw": result[1],
-                            "nmrt": result[2],
+                            "kdrt": str(result[0]),
+                            "kdrw": str(result[1]),
+                            "nmrt": str(result[2]),
                             "alamat": result[3]
                         },
                         "message": "RT succesfully retrieved"
