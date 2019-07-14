@@ -142,7 +142,25 @@ class RukunTetangga(Resource):
             return {'message': 'Something went wrong'}, 500
 
     def delete(self):
-        return
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'nmrt', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        rt = models.RukunTetangga()
+        try:
+            if rt.delete(data) == 0:
+                return {
+                    "message": "No nmrt found"
+                }, 400
+            else:
+                result = {
+                    "message": "RT succesfully deleted"
+                }
+                return result
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
 
 
 class Warga(Resource):
