@@ -43,6 +43,35 @@ class RukunTetangga(Resource):
     def post(self):
         return
 
+    # def get(self):
+    #     emp_number = get_raw_jwt()['identity']
+    #     try:
+    #         rt = models.RukunTetangga(emp_number)
+    #         return {
+    #             "data": personal_detail.get(),
+    #             "message": "Personal detail succesfully retrieved"
+    #         }
+    #     except Exception as e:
+    #         print(e)
+    #         return {'message': 'Something went wrong'}, 500
+
+    def get(self):
+        try:
+            rt = models.RukunTetangga()
+            return {
+                "data": rt.get_all(),
+                "message": "Rukun Tetangga succesfully retrieved"
+            }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def put(self):
+        return
+
+    def delete(self):
+        return
+
 
 class Warga(Resource):
     def post(self):
