@@ -360,7 +360,7 @@ class Pemasukan(Resource):
                             "norumah": str(result[2]),
                             "nokk": str(result[3]),
                             "jumlah": str(result[4]),
-                            "keterangan": result[5],
+                            "keterangan": str(result[5]),
                             "dokumen_bayar": str(result[6]),
                             "terverifikasi": str(result[7])
                         },
