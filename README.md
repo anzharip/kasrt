@@ -1,6 +1,10 @@
 # KASRT
 HTTP REST API PoC for KASRT written in Python 3. 
 
+# To-do
+* One
+* Two
+
 # To use: 
 1. Clone the repo. 
 
