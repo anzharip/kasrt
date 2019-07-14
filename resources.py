@@ -296,7 +296,123 @@ class Warga(Resource):
 
 class Pemasukan(Resource):
     def post(self):
-        return
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'norumah', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'nokk', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'jumlah', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'keterangan', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'dokumen_bayar', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        try:
+            pemasukan = models.Pemasukan()
+            pemasukan.post(data)
+            return {
+                "message": "Pemasukan succesfully created"
+            }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def get(self):
+        # norumah = get_raw_jwt()['identity']
+        pemasukan = models.Pemasukan()
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdpemasukan', help='This field cannot be blank', required=True, location=["form", "args"])
+        data = parser.parse_args()
+        try:
+            if data["kdpemasukan"] == "all":
+                result = []
+                for pemasukan in pemasukan.get_all():
+                    result.append(
+                        {
+                            "kdpemasukan": str(pemasukan[0]),
+                            "tanggal": str(pemasukan[1]),
+                            "norumah": str(pemasukan[2]),
+                            "nokk": str(pemasukan[3]),
+                            "jumlah": str(pemasukan[4]),
+                            "keterangan": pemasukan[5],
+                            "dokumen_bayar": str(pemasukan[6]),
+                            "terverifikasi": str(pemasukan[7])
+                        }
+                    )
+                return {
+                    "data": result,
+                    "message": "Pemasukan succesfully retrieved"
+                }
+            else:
+                result = pemasukan.get(data)
+                if result is None:
+                    return {
+                        "message": "Pemasukan not found"
+                    }, 400
+                else:
+                    return {
+                        "data": {
+                            "kdpemasukan": str(result[0]),
+                            "tanggal": str(result[1]),
+                            "norumah": str(result[2]),
+                            "nokk": str(result[3]),
+                            "jumlah": str(result[4]),
+                            "keterangan": result[5],
+                            "dokumen_bayar": str(result[6]),
+                            "terverifikasi": str(result[7])
+                        },
+                        "message": "Pemasukan succesfully retrieved"
+                    }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def put(self):
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdpemasukan', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'terverifikasi', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        pemasukan = models.Pemasukan()
+        try:
+            if pemasukan.put(data) == 0:
+                return {
+                    "message": "Pemasukan not updated, no change found on submitted data or no id found"
+                }
+            else:
+                result = {
+                    "message": "Pemasukan succesfully updated"
+                }
+                return result
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def delete(self):
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdpemasukan', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        pemasukan = models.Pemasukan()
+        try:
+            if pemasukan.delete(data) == 0:
+                return {
+                    "message": "No kdpemasukan found"
+                }, 400
+            else:
+                result = {
+                    "message": "Pemasukan succesfully deleted"
+                }
+                return result
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
 
 
 class Pengeluaran(Resource):
