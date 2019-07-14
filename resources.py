@@ -57,6 +57,7 @@ class RukunTetangga(Resource):
         }
         try:
             rt = models.RukunTetangga()
+            rt.post(body)
             return {
                 "message": "RT succesfully created"
             }
