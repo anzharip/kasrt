@@ -11,7 +11,7 @@
  Target Server Version : 100314
  File Encoding         : 65001
 
- Date: 14/07/2019 14:21:17
+ Date: 14/07/2019 17:24:15
 */
 
 SET NAMES utf8mb4;
@@ -23,12 +23,12 @@ SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS `rt`;
 CREATE TABLE `rt` (
   `kdrt` int(11) NOT NULL AUTO_INCREMENT,
-  `kdrw` decimal(10,0) NOT NULL DEFAULT 1,
-  `nmrt` decimal(10,0) NOT NULL,
+  `kdrw` int(10) NOT NULL DEFAULT 1,
+  `nmrt` int(10) NOT NULL,
   `alamat` varchar(255) NOT NULL,
   PRIMARY KEY (`kdrt`) USING BTREE,
   UNIQUE KEY `nmrt` (`nmrt`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of rt
@@ -49,9 +49,9 @@ CREATE TABLE `saldokas` (
   `kdsaldo` int(11) NOT NULL AUTO_INCREMENT,
   `tahun` year(4) NOT NULL,
   `bulan` enum('jan','feb','mar','apr','mei','jun','jul','agu','sep','okt','nov','des') NOT NULL,
-  `masuk` decimal(10,0) DEFAULT NULL,
-  `keluar` decimal(10,0) DEFAULT NULL,
-  `saldoakhir` decimal(10,0) DEFAULT NULL,
+  `masuk` int(10) DEFAULT NULL,
+  `keluar` int(10) DEFAULT NULL,
+  `saldoakhir` int(10) DEFAULT NULL,
   PRIMARY KEY (`kdsaldo`) USING BTREE,
   UNIQUE KEY `saldokas_index1` (`tahun`,`bulan`) USING BTREE
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
@@ -64,7 +64,7 @@ CREATE TABLE `tr_iuran` (
   `kdiuran` int(11) NOT NULL AUTO_INCREMENT,
   `tahun` year(4) NOT NULL,
   `bulan` enum('jan','feb','mar','apr','mei','jun','jul','agu','sep','okt','nov','des') NOT NULL,
-  `norumah` decimal(10,0) NOT NULL,
+  `norumah` int(10) NOT NULL,
   PRIMARY KEY (`kdiuran`) USING BTREE,
   UNIQUE KEY `tr_iuran_index1` (`tahun`,`bulan`,`norumah`) USING BTREE,
   KEY `norumah` (`norumah`),
@@ -86,9 +86,9 @@ DROP TABLE IF EXISTS `tr_pemasukan`;
 CREATE TABLE `tr_pemasukan` (
   `kdpemasukan` int(11) NOT NULL AUTO_INCREMENT,
   `tanggal` datetime DEFAULT current_timestamp(),
-  `norumah` decimal(10,0) DEFAULT NULL,
+  `norumah` int(10) DEFAULT NULL,
   `nokk` varchar(255) DEFAULT NULL,
-  `jumlah` decimal(10,0) DEFAULT NULL,
+  `jumlah` int(10) DEFAULT NULL,
   `keterangan` varchar(255) DEFAULT NULL,
   `dokumen_bayar` blob DEFAULT NULL,
   `terverifikasi` tinyint(1) DEFAULT 0,
@@ -96,7 +96,7 @@ CREATE TABLE `tr_pemasukan` (
   KEY `tr_pemasukan_fk2` (`nokk`),
   KEY `tr_pemasukan_fk1` (`norumah`,`nokk`),
   CONSTRAINT `tr_pemasukan_fk1` FOREIGN KEY (`norumah`, `nokk`) REFERENCES `warga` (`norumah`, `nokk`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tr_pemasukan
@@ -137,20 +137,20 @@ COMMIT;
 DROP TABLE IF EXISTS `warga`;
 CREATE TABLE `warga` (
   `kdwarga` int(11) NOT NULL AUTO_INCREMENT,
-  `nmrt` decimal(10,0) DEFAULT NULL,
-  `norumah` decimal(10,0) NOT NULL,
-  `nokk` varchar(255) DEFAULT NULL,
+  `nmrt` int(10) DEFAULT NULL,
+  `norumah` int(10) NOT NULL,
+  `nokk` varchar(255) NOT NULL,
   `nmkk` varchar(255) DEFAULT NULL,
   `statustinggal` varchar(255) DEFAULT NULL,
-  `pengurus` tinyint(4) DEFAULT 0,
+  `pengurus` tinyint(1) DEFAULT 0,
   `password` varchar(255) NOT NULL,
   PRIMARY KEY (`kdwarga`,`norumah`) USING BTREE,
   UNIQUE KEY `norumah` (`norumah`) USING BTREE,
   UNIQUE KEY `nokk` (`nokk`) USING BTREE,
   KEY `norumah_2` (`norumah`,`nokk`),
-  KEY `fk1` (`nmrt`),
-  CONSTRAINT `fk1` FOREIGN KEY (`nmrt`) REFERENCES `rt` (`nmrt`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+  KEY `warga_fk1` (`nmrt`),
+  CONSTRAINT `warga_fk1` FOREIGN KEY (`nmrt`) REFERENCES `rt` (`nmrt`)
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of warga
@@ -160,7 +160,8 @@ INSERT INTO `warga` VALUES (3, 2, 11, '0001', 'john doe', 'kontrak', 0, '$2y$12$
 INSERT INTO `warga` VALUES (4, 2, 12, '0002', 'jane doe', 'milik sendiri', 0, '$2y$12$X8.O9i67XM.6T5sHIQYBQ.VIw/kB/AmsA9EoknJyFLLGt3iCJeNQC');
 INSERT INTO `warga` VALUES (5, 3, 13, '0003', 'john smith', 'kontrak', 0, '$2y$12$4YFV.IRYDa2oG30CV7YmD.8/rPoa/fgtz9ABRsLLNU5HUa9xtTszW');
 INSERT INTO `warga` VALUES (6, 3, 14, '0004', 'jane smith', 'milik sendiri', 0, '$2y$12$UmKeNK9FHNlvDAFTnNdnMuUY2sKLYiwHATriBi0lWE5nAmys65Q7a');
-INSERT INTO `warga` VALUES (12, 1, 101, '', 'genghis khan', '', 0, '$2b$12$.gdXHY0/IvOV63qpxhMWXe7ADlg99u9tHsChZ0Cs/jHN4MimAW2y6');
+INSERT INTO `warga` VALUES (12, 1, 101, '0005', 'genghis khan', '', 0, '$2b$12$.gdXHY0/IvOV63qpxhMWXe7ADlg99u9tHsChZ0Cs/jHN4MimAW2y6');
+INSERT INTO `warga` VALUES (19, 1, 103, '10102', 'john wick', 'kontrak', 0, '$2b$12$wRJHWxNtW7iUUMXeqh.scOegBPg0729VNkvPm2mHdq1UzHGoCPnv.');
 COMMIT;
 
 SET FOREIGN_KEY_CHECKS = 1;
