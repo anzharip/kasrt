@@ -165,7 +165,133 @@ class RukunTetangga(Resource):
 
 class Warga(Resource):
     def post(self):
-        return
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'nmrt', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'norumah', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'nokk', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'nmkk', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'statustinggal', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'pengurus', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'password', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        try:
+            warga = models.Warga()
+            warga.post(data)
+            return {
+                "message": "Warga succesfully created"
+            }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def get(self):
+        # norumah = get_raw_jwt()['identity']
+        warga = models.Warga()
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'norumah', help='This field cannot be blank', required=True, location=["form", "args"])
+        data = parser.parse_args()
+        try:
+            if data["norumah"] == "all":
+                result = []
+                for warga in warga.get_all():
+                    result.append(
+                        {
+                            "kdwarga": str(warga[0]),
+                            "nmrt": str(warga[1]),
+                            "norumah": str(warga[2]),
+                            "nokk": str(warga[3]), 
+                            "nmkk": warga[4], 
+                            "statustinggal": warga[5], 
+                            "pengurus": str(warga[6])
+                        }
+                    )
+                return {
+                    "data": result,
+                    "message": "Warga succesfully retrieved"
+                }
+            else:
+                result = warga.get(data)
+                if result is None:
+                    return {
+                        "message": "Warga not found"
+                    }, 400
+                else:
+                    return {
+                        "data": {
+                            "kdwarga": str(result[0]),
+                            "nmrt": str(result[1]),
+                            "norumah": str(result[2]),
+                            "nokk": str(result[3]), 
+                            "nmkk": result[4], 
+                            "statustinggal": result[5], 
+                            "pengurus": str(result[6])
+                        },
+                        "message": "Warga succesfully retrieved"
+                    }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def put(self):
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'nmrt', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'norumah', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'nokk', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'nmkk', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'statustinggal', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'pengurus', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        warga = models.Warga()
+        try:
+            if warga.put(data) == 0:
+                return {
+                    "message": "Warga not updated, no change found on submitted data or no id found"
+                }
+            else:
+                result = {
+                    "message": "Warga succesfully updated"
+                }
+                return result
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def delete(self):
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'norumah', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        warga = models.Warga()
+        try:
+            if warga.delete(data) == 0:
+                return {
+                    "message": "No norumah found"
+                }, 400
+            else:
+                result = {
+                    "message": "Warga succesfully deleted"
+                }
+                return result
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
 
 
 class Pemasukan(Resource):
