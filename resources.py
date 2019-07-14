@@ -44,7 +44,7 @@ class RukunTetangga(Resource):
         return
 
     def get(self):
-        norumah = get_raw_jwt()['identity']
+        # norumah = get_raw_jwt()['identity']
         rt = models.RukunTetangga()
         parser = reqparse.RequestParser()
         parser.add_argument(
