@@ -41,7 +41,29 @@ class Login(Resource):
 
 class RukunTetangga(Resource):
     def post(self):
-        return
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdrw', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'nmrt', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'alamat', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        body = {
+            "kdrw": data["kdrw"], 
+            "nmrt": data["nmrt"], 
+            "alamat": data["alamat"]
+        }
+        try:
+            rt = models.RukunTetangga()
+            return {
+                "data": rt.post(body),
+                "message": "RT succesfully created"
+            }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
 
     def get(self):
         # norumah = get_raw_jwt()['identity']
