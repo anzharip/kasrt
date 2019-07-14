@@ -1,50 +1,38 @@
 import models
 
-warga = models.Warga("11", "john doe")
+pengeluaran = models.Pengeluaran()
 
-###
+##
 
-# print(warga.get())
+# print(pengeluaran.get_all())
 
-# print(warga.verify_hash())
-
-###
+##
 
 # body = {
-#     "nmrt": "1", 
-#     "norumah": "101", 
-#     "nokk": "", 
-#     "nmkk": "genghis khan", 
-#     "statustinggal": "",
-#     "pengurus": "0",
-#     "password": "genghis khan"
+#     "kdpengeluaran": "2"
 # }
 
-# print(warga.post(body))
+# print(
+#     pengeluaran.get(body)
+# )
 
-###
+##
 
 # body = {
-#     "norumah": "101", 
-# }
-# print(warga.delete(body))
-
-# body = {
-#     "nmrt": "1", 
-#     "norumah": "101", 
-#     "nokk": "", 
-#     "nmkk": "genghis khan", 
-#     "statustinggal": "",
-#     "pengurus": "0"
+#     "jumlah": "300000", 
+#     "keterangan": "pagar kantor rt"
 # }
 
-# print(warga.put(body))
+# print(
+#     pengeluaran.post(body)
+# )
 
-###
+##
 
 body = {
-    "norumah": "101", 
-    "password": "genghis khan"
+    "kdpengeluaran": "4"
 }
 
-print(warga.put_password(body))
+print(
+    pengeluaran.delete(body)
+)

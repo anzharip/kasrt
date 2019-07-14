@@ -23,6 +23,17 @@ class Warga:
         db.close_connection(connection, cursor)
         return result
 
+    def get_all(self):
+        field = "`kdwarga`, `nmrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`"
+        table = "`warga`"
+        statement = "SELECT %s FROM %s LIMIT 0,1000" % (
+            field, table)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchall()
+        db.close_connection(connection, cursor)
+        return result
+
     def verify_hash(self):
         field = "`norumah`, `password`"
         table = "`warga`"
@@ -54,7 +65,8 @@ class Warga:
         return result
 
     def put(self, body):
-        field = "`nmrt`='%s', `nokk`='%s', `nmkk`='%s', `statustinggal`='%s', `pengurus`='%s'" % (body['nmrt'], body['nokk'], body['nmkk'], body['statustinggal'], body['pengurus'])
+        field = "`nmrt`='%s', `nokk`='%s', `nmkk`='%s', `statustinggal`='%s', `pengurus`='%s'" % (
+            body['nmrt'], body['nokk'], body['nmkk'], body['statustinggal'], body['pengurus'])
         table = "`warga`"
         sql_filter = "`norumah`='%s'" % (body['norumah'])
         statement = "UPDATE %s SET %s WHERE %s" % (
@@ -90,6 +102,179 @@ class Warga:
         db.close_connection(connection, cursor)
         return cursor.rowcount
 
+
+class RukunTetangga:
+    def get(self, body):
+        field = "`kdrt`, `nmrt`, `kdrw`, `nmrt`, `alamat`"
+        table = "`rt`"
+        sql_filter = "`nmrt` = '%s'" % body["nmrt"]
+        statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
+            field, table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchone()
+        db.close_connection(connection, cursor)
+        return result
+
+    def get_all(self):
+        field = "`kdrt`, `kdrw`, `nmrt`, `alamat`"
+        table = "`rt`"
+        statement = "SELECT %s FROM %s LIMIT 0,1000" % (
+            field, table)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchall()
+        db.close_connection(connection, cursor)
+        return result
+
+    def post(self, body):
+        field = "(`kdrw`, `nmrt`, `alamat`)"
+        values = "('%s', '%s', '%s')" % (
+            body["kdrw"], body["nmrt"], body["alamat"])
+        table = "`rt`"
+        statement = "INSERT INTO %s %s VALUES %s" % (
+            table, field, values)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        result = cursor.rowcount
+        return result
+
+    def put(self, body):
+        field = "`kdrw`='%s', `alamat`='%s'" % (
+            body['kdrw'], body['alamat'])
+        table = "`rt`"
+        sql_filter = "`nmrt`='%s'" % (body['nmrt'])
+        statement = "UPDATE %s SET %s WHERE %s" % (
+            table, field, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        return cursor.rowcount
+
+    def delete(self, body):
+        table = "`rt`"
+        sql_filter = "`nmrt` = %s" % (body["nmrt"])
+        statement = "DELETE FROM %s WHERE %s" % (
+            table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        return cursor.rowcount
+
+class Pemasukan:
+    def get(self, body):
+        field = "`kdpemasukan`, `tanggal`, `norumah`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`, `terverifikasi`"
+        table = "`tr_pemasukan`"
+        sql_filter = "`kdpemasukan` = '%s'" % body["kdpemasukan"]
+        statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
+            field, table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchone()
+        db.close_connection(connection, cursor)
+        return result
+
+    def get_all(self):
+        field = "`kdpemasukan`, `tanggal`, `norumah`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`, `terverifikasi`"
+        table = "`tr_pemasukan`"
+        statement = "SELECT %s FROM %s LIMIT 0,1000" % (
+            field, table)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchall()
+        db.close_connection(connection, cursor)
+        return result
+
+    def post(self, body):
+        field = "(`norumah`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`)"
+        values = "('%s', '%s', '%s', '%s', '%s')" % (
+            body["norumah"], body["nokk"], body["jumlah"], body["keterangan"], body["dokumen_bayar"],)
+        table = "`tr_pemasukan`"
+        statement = "INSERT INTO %s %s VALUES %s" % (
+            table, field, values)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        result = cursor.rowcount
+        return result
+
+    def put(self, body):
+        field = "`terverifikasi`='%s'" % (
+            body['terverifikasi'])
+        table = "`tr_pemasukan`"
+        sql_filter = "`kdpemasukan`='%s'" % (body['kdpemasukan'])
+        statement = "UPDATE %s SET %s WHERE %s" % (
+            table, field, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        return cursor.rowcount
+
+    def delete(self, body):
+        table = "`tr_pemasukan`"
+        sql_filter = "`kdpemasukan` = %s" % (body["kdpemasukan"])
+        statement = "DELETE FROM %s WHERE %s" % (
+            table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        return cursor.rowcount
+
+class Pengeluaran:
+    def get(self, body):
+        field = "`kdpengeluaran`, `tanggal`, `jumlah`, `keterangan`"
+        table = "`tr_pengeluaran`"
+        sql_filter = "`kdpengeluaran` = '%s'" % body["kdpengeluaran"]
+        statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
+            field, table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchone()
+        db.close_connection(connection, cursor)
+        return result
+
+    def get_all(self):
+        field = "`kdpengeluaran`, `tanggal`, `jumlah`, `keterangan`"
+        table = "`tr_pengeluaran`"
+        statement = "SELECT %s FROM %s LIMIT 0,1000" % (
+            field, table)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchall()
+        db.close_connection(connection, cursor)
+        return result
+
+    def post(self, body):
+        field = "(`jumlah`, `keterangan`)"
+        values = "('%s', '%s')" % (
+            body["jumlah"], body["keterangan"])
+        table = "`tr_pengeluaran`"
+        statement = "INSERT INTO %s %s VALUES %s" % (
+            table, field, values)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        result = cursor.rowcount
+        return result
+
+    def delete(self, body):
+        table = "`tr_pengeluaran`"
+        sql_filter = "`kdpengeluaran` = %s" % (body["kdpengeluaran"])
+        statement = "DELETE FROM %s WHERE %s" % (
+            table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        return cursor.rowcount
 
 # class PersonalDetail:
 #     def __init__(self, emp_number):
