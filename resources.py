@@ -58,7 +58,6 @@ class RukunTetangga(Resource):
         try:
             rt = models.RukunTetangga()
             return {
-                "data": rt.post(body),
                 "message": "RT succesfully created"
             }
         except Exception as e:
@@ -112,7 +111,34 @@ class RukunTetangga(Resource):
             return {'message': 'Something went wrong'}, 500
 
     def put(self):
-        return
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'nmrt', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrw', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'alamat', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        rt = models.RukunTetangga()
+        body = {
+            "nmrt": data["nmrt"], 
+            "kdrw": data["kdrw"], 
+            "alamat": data["alamat"]
+        }
+        try:
+            if rt.put(body) == 0:
+                return {
+                    "message": "RT not updated, no change found on submitted data or no id found"
+                }
+            else:
+                result = {
+                    "message": "RT succesfully updated"
+                }
+                return result
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
 
     def delete(self):
         return
