@@ -70,10 +70,10 @@ class RukunTetangga(Resource):
         rt = models.RukunTetangga()
         parser = reqparse.RequestParser()
         parser.add_argument(
-            'kdrt', help='This field cannot be blank', required=True, location=["form", "args"])
+            'nmrt', help='This field cannot be blank', required=True, location=["form", "args"])
         data = parser.parse_args()
         try:
-            if data["kdrt"] == "all":
+            if data["nmrt"] == "all":
                 result = []
                 for rt in rt.get_all():
                     result.append(
@@ -90,7 +90,7 @@ class RukunTetangga(Resource):
                 }
             else:
                 body = {
-                    "kdrt": data["kdrt"]
+                    "nmrt": data["nmrt"]
                 }
                 result = rt.get(body)
                 if result is None:
