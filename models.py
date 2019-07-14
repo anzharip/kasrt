@@ -304,7 +304,7 @@ class Iuran:
         return result
 
     def post(self, body):
-        field = "(tahun`, `bulan`, `norumah`)"
+        field = "(`tahun`, `bulan`, `norumah`)"
         values = "('%s', '%s', '%s')" % (
             body["tahun"], body["bulan"], body["norumah"])
         table = "`tr_iuran`"
@@ -320,6 +320,55 @@ class Iuran:
     def delete(self, body):
         table = "`tr_iuran`"
         sql_filter = "`kdiuran` = %s" % (body["kdiuran"])
+        statement = "DELETE FROM %s WHERE %s" % (
+            table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        return cursor.rowcount
+
+class SaldoKas:
+    def get(self, body):
+        field = "`kdsaldo`, `tahun`, `masuk`, `keluar`, `saldoakhir`"
+        table = "`saldokas`"
+        sql_filter = "`kdsaldo` = '%s'" % body["kdsaldo"]
+        statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
+            field, table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchone()
+        db.close_connection(connection, cursor)
+        return result
+
+    def get_all(self):
+        field = "`kdsaldo`, `tahun`, `masuk`, `keluar`, `saldoakhir`"
+        table = "`saldokas`"
+        statement = "SELECT %s FROM %s LIMIT 0,1000" % (
+            field, table)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchall()
+        db.close_connection(connection, cursor)
+        return result
+
+    def post(self, body):
+        field = "(`tahun`, `masuk`, `keluar`, `saldoakhir`)"
+        values = "('%s', '%s', '%s', '%s')" % (
+            body["tahun"], body["bulan"], body["keluar"], body["saldoakhir"])
+        table = "`saldokas`"
+        statement = "INSERT INTO %s %s VALUES %s" % (
+            table, field, values)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        result = cursor.rowcount
+        return result
+
+    def delete(self, body):
+        table = "`saldokas`"
+        sql_filter = "`kdsaldo` = %s" % (body["kdsaldo"])
         statement = "DELETE FROM %s WHERE %s" % (
             table, sql_filter)
         connection = db.open_connection()
