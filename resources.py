@@ -23,9 +23,9 @@ class Login(Resource):
                 return {
                     "message": "Username not found"
                 }, 400
-            kdwarga = user.get(body)[0]
+            norumah = user.get(body)[2]
             if user.verify_hash(body) is True:
-                access_token = create_access_token(identity=kdwarga)
+                access_token = create_access_token(identity=norumah)
                 return {
                     'message': 'Logged in as {}'.format(data['username']),
                     'access_token': access_token
@@ -43,25 +43,50 @@ class RukunTetangga(Resource):
     def post(self):
         return
 
-    # def get(self):
-    #     emp_number = get_raw_jwt()['identity']
-    #     try:
-    #         rt = models.RukunTetangga(emp_number)
-    #         return {
-    #             "data": personal_detail.get(),
-    #             "message": "Personal detail succesfully retrieved"
-    #         }
-    #     except Exception as e:
-    #         print(e)
-    #         return {'message': 'Something went wrong'}, 500
-
     def get(self):
+        emp_number = get_raw_jwt()['identity']
+        attachment = models.Attachment(emp_number, self.screen)
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'file_id', help='This field cannot be blank', required=True, location=["form", "args"])
+        data = parser.parse_args()
         try:
-            rt = models.RukunTetangga()
-            return {
-                "data": rt.get_all(),
-                "message": "Rukun Tetangga succesfully retrieved"
-            }
+            if data["file_id"] == "all":
+                result = []
+                for attachment in attachment.get_meta_all():
+                    result.append(
+                        {
+                            "file_id": str(attachment[1]),
+                            "comment": attachment[2],
+                            "file_name": attachment[3],
+                            "size": str(attachment[4]),
+                            "type": attachment[5],
+                            "date_added": attachment[9]
+                        }
+                    )
+                return {
+                    "data": result,
+                    "message": "Files succesfully retrieved"
+                }
+            else:
+                result = attachment.get(data["file_id"])
+                if result is None:
+                    return {
+                        "message": "File not found"
+                    }, 400
+                else:
+                    return {
+                        "data": {
+                            "file_id": result[1],
+                            "file": b64encode(result[5]).decode(),
+                            "comment": result[2],
+                            "file_name": result[3],
+                            "size": result[4],
+                            "type": result[6],
+                            "date_added": result[10]
+                        },
+                        "message": "File succesfully retrieved"
+                    }
         except Exception as e:
             print(e)
             return {'message': 'Something went wrong'}, 500
