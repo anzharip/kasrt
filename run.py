@@ -68,15 +68,16 @@ def my_user_loader_error_loader(identity):
         'message': 'Error loading the user %s' % identity
     }), 401
 
+
 app.config['PROPAGATE_EXCEPTIONS'] = True
 app.config['SECRET_KEY'] = config.SECRET_KEY
 app.config['JWT_SECRET_KEY'] = config.JWT_SECRET_KEY
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = config.JWT_ACCESS_TOKEN_EXPIRES
 
 api.add_resource(resources.Login, '/login')
-api.add_resource(resources.PersonalDetail, '/myinfo/personaldetail')
-api.add_resource(resources.PersonalDetailAttachment,
-                 '/myinfo/personaldetail/attachment')
-api.add_resource(resources.Nationality, '/nationality')
-api.add_resource(resources.WorkShift, '/workshift')
-api.add_resource(resources.Religion, '/religion')
+api.add_resource(resources.RukunTetangga, '/rt')
+api.add_resource(resources.Warga, '/warga')
+api.add_resource(resources.Pemasukan, '/pemasukan')
+api.add_resource(resources.Pengeluaran, '/pengeluaran')
+api.add_resource(resources.Iuran, '/iuran')
+api.add_resource(resources.SaldoKas, '/saldokas')
