@@ -40,6 +40,7 @@ class Login(Resource):
 
 
 class RukunTetangga(Resource):
+    @jwt_required
     def post(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -65,6 +66,7 @@ class RukunTetangga(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def get(self):
         # norumah = get_raw_jwt()['identity']
         rt = models.RukunTetangga()
@@ -111,6 +113,7 @@ class RukunTetangga(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def put(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -141,6 +144,7 @@ class RukunTetangga(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def delete(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
