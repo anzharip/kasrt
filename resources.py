@@ -642,10 +642,10 @@ class SaldoKas(Resource):
                         {
                             "kdsaldo": str(saldokas[0]),
                             "tahun": str(saldokas[1]),
-                            "bulan": saldokas[3],
-                            "masuk": str(saldokas[4]),
-                            "keluar": str(saldokas[5]),
-                            "saldoakhir": str(saldokas[6])
+                            "bulan": saldokas[2],
+                            "masuk": str(saldokas[3]),
+                            "keluar": str(saldokas[4]),
+                            "saldoakhir": str(saldokas[5])
                         }
                     )
                 return {
@@ -663,10 +663,10 @@ class SaldoKas(Resource):
                         "data": {
                             "kdsaldo": str(result[0]),
                             "tahun": str(result[1]),
-                            "bulan": result[3],
-                            "masuk": str(result[4]),
-                            "keluar": str(result[5]),
-                            "saldoakhir": str(result[6])
+                            "bulan": result[2],
+                            "masuk": str(result[3]),
+                            "keluar": str(result[4]),
+                            "saldoakhir": str(result[5])
                         },
                         "message": "Saldo Kas succesfully retrieved"
                     }
