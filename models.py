@@ -328,7 +328,7 @@ class Iuran:
 
 class SaldoKas:
     def get(self, body):
-        field = "`kdsaldo`, `tahun`, `masuk`, `keluar`, `saldoakhir`"
+        field = "`kdsaldo`, `tahun`, `bulan`, `masuk`, `keluar`, `saldoakhir`"
         table = "`saldokas`"
         sql_filter = "`kdsaldo` = '%s'" % body["kdsaldo"]
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
@@ -340,7 +340,7 @@ class SaldoKas:
         return result
 
     def get_all(self):
-        field = "`kdsaldo`, `tahun`, `masuk`, `keluar`, `saldoakhir`"
+        field = "`kdsaldo`, `tahun`,`bulan`, `masuk`, `keluar`, `saldoakhir`"
         table = "`saldokas`"
         statement = "SELECT %s FROM %s LIMIT 0,1000" % (
             field, table)
@@ -350,10 +350,38 @@ class SaldoKas:
         db.close_connection(connection, cursor)
         return result
 
+    def get_total_pemasukan(self, body):
+        # SELECT FORMAT(SUM(`jumlah`),1) AS total_pemasukan FROM `kasrt`.`tr_pemasukan` WHERE `terverifikasi`=1 AND `tanggal`>='2019-07-01' AND `tanggal`<='2019-07-31' LIMIT 0,1000
+        field = "SUM(`jumlah`) AS total_pemasukan"
+        table = "`tr_pemasukan`"
+        sql_filter = "`terverifikasi`=1 AND `tanggal`>='%s-01' AND `tanggal`<='%s-31'" % (
+            body["tahunbulan"], body["tahunbulan"])
+        statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
+            field, table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchone()
+        db.close_connection(connection, cursor)
+        return result
+
+    def get_total_pengeluaran(self, body):
+        # SELECT FORMAT(SUM(`jumlah`),1) AS total_pengeluaran FROM `kasrt`.`tr_pengeluaran` WHERE `tanggal`>='2019-07-01' AND `tanggal`<='2019-07-31' LIMIT 0,1000
+        field = "SUM(`jumlah`) AS total_pengeluaran"
+        table = "`tr_pengeluaran`"
+        sql_filter = "`tanggal`>='%s-01' AND `tanggal`<='%s-31'" % (
+            body["tahunbulan"], body["tahunbulan"])
+        statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
+            field, table, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        result = cursor.fetchone()
+        db.close_connection(connection, cursor)
+        return result
+
     def post(self, body):
-        field = "(`tahun`, `masuk`, `keluar`, `saldoakhir`)"
-        values = "('%s', '%s', '%s', '%s')" % (
-            body["tahun"], body["bulan"], body["keluar"], body["saldoakhir"])
+        field = "(`tahun`,`bulan`, `masuk`, `keluar`, `saldoakhir`)"
+        values = "('%s', '%s', '%s', '%s', '%s')" % (
+            body["tahun"], body["bulan"], body["masuk"], body["keluar"], body["saldoakhir"])
         table = "`saldokas`"
         statement = "INSERT INTO %s %s VALUES %s" % (
             table, field, values)

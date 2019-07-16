@@ -51,8 +51,8 @@ class RukunTetangga(Resource):
             'alamat', help='This field cannot be blank', required=True)
         data = parser.parse_args()
         body = {
-            "kdrw": data["kdrw"], 
-            "nmrt": data["nmrt"], 
+            "kdrw": data["kdrw"],
+            "nmrt": data["nmrt"],
             "alamat": data["alamat"]
         }
         try:
@@ -123,8 +123,8 @@ class RukunTetangga(Resource):
         data = parser.parse_args()
         rt = models.RukunTetangga()
         body = {
-            "nmrt": data["nmrt"], 
-            "kdrw": data["kdrw"], 
+            "nmrt": data["nmrt"],
+            "kdrw": data["kdrw"],
             "alamat": data["alamat"]
         }
         try:
@@ -208,9 +208,9 @@ class Warga(Resource):
                             "kdwarga": str(warga[0]),
                             "nmrt": str(warga[1]),
                             "norumah": str(warga[2]),
-                            "nokk": str(warga[3]), 
-                            "nmkk": warga[4], 
-                            "statustinggal": warga[5], 
+                            "nokk": str(warga[3]),
+                            "nmkk": warga[4],
+                            "statustinggal": warga[5],
                             "pengurus": str(warga[6])
                         }
                     )
@@ -230,9 +230,9 @@ class Warga(Resource):
                             "kdwarga": str(result[0]),
                             "nmrt": str(result[1]),
                             "norumah": str(result[2]),
-                            "nokk": str(result[3]), 
-                            "nmkk": result[4], 
-                            "statustinggal": result[5], 
+                            "nokk": str(result[3]),
+                            "nmkk": result[4],
+                            "statustinggal": result[5],
                             "pengurus": str(result[6])
                         },
                         "message": "Warga succesfully retrieved"
@@ -417,17 +417,283 @@ class Pemasukan(Resource):
 
 class Pengeluaran(Resource):
     def post(self):
-        return
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'jumlah', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'keterangan', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        try:
+            pengeluaran = models.Pengeluaran()
+            pengeluaran.post(data)
+            return {
+                "message": "Pengeluaran succesfully created"
+            }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def get(self):
+        # norumah = get_raw_jwt()['identity']
+        pengeluaran = models.Pengeluaran()
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdpengeluaran', help='This field cannot be blank', required=True, location=["form", "args"])
+        data = parser.parse_args()
+        try:
+            if data["kdpengeluaran"] == "all":
+                result = []
+                for pengeluaran in pengeluaran.get_all():
+                    result.append(
+                        {
+                            "kdpengeluaran": str(pengeluaran[0]),
+                            "tanggal": str(pengeluaran[1]),
+                            "jumlah": str(pengeluaran[2]),
+                            "keterangan": pengeluaran[3]
+                        }
+                    )
+                return {
+                    "data": result,
+                    "message": "Pengeluaran succesfully retrieved"
+                }
+            else:
+                result = pengeluaran.get(data)
+                if result is None:
+                    return {
+                        "message": "Pengeluaran not found"
+                    }, 400
+                else:
+                    return {
+                        "data": {
+                            "kdpengeluaran": str(result[0]),
+                            "tanggal": str(result[1]),
+                            "jumlah": str(result[2]),
+                            "keterangan": result[3]
+                        },
+                        "message": "Pengeluaran succesfully retrieved"
+                    }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def delete(self):
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdpengeluaran', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        pengeluaran = models.Pengeluaran()
+        try:
+            if pengeluaran.delete(data) == 0:
+                return {
+                    "message": "No kdpengeluaran found"
+                }, 400
+            else:
+                result = {
+                    "message": "Pengeluaran succesfully deleted"
+                }
+                return result
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
 
 
 class Iuran(Resource):
     def post(self):
-        return
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'tahun', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'bulan', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'norumah', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        try:
+            iuran = models.Iuran()
+            iuran.post(data)
+            return {
+                "message": "Iuran succesfully created"
+            }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def get(self):
+        # norumah = get_raw_jwt()['identity']
+        iuran = models.Iuran()
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdiuran', help='This field cannot be blank', required=True, location=["form", "args"])
+        data = parser.parse_args()
+        try:
+            if data["kdiuran"] == "all":
+                result = []
+                for iuran in iuran.get_all():
+                    result.append(
+                        {
+                            "kdiuran": str(iuran[0]),
+                            "tahun": str(iuran[1]),
+                            "bulan": iuran[2],
+                            "norumah": str(iuran[3])
+                        }
+                    )
+                return {
+                    "data": result,
+                    "message": "Iuran succesfully retrieved"
+                }
+            else:
+                result = iuran.get(data)
+                if result is None:
+                    return {
+                        "message": "Iuran not found"
+                    }, 400
+                else:
+                    return {
+                        "data": {
+                            "kdiuran": str(result[0]),
+                            "tahun": str(result[1]),
+                            "bulan": result[2],
+                            "norumah": str(result[3])
+                        },
+                        "message": "Iuran succesfully retrieved"
+                    }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def delete(self):
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdiuran', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        iuran = models.Iuran()
+        try:
+            if iuran.delete(data) == 0:
+                return {
+                    "message": "No kdiuran found"
+                }, 400
+            else:
+                result = {
+                    "message": "Iuran succesfully deleted"
+                }
+                return result
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
 
 
 class SaldoKas(Resource):
     def post(self):
-        return
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'tahunbulan', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        try:
+            saldokas = models.SaldoKas()
+            bulandict = {
+                "01": "jan",
+                "02": "feb",
+                "03": "mar",
+                "04": "apr",
+                "05": "mei",
+                "06": "jun",
+                "07": "jul",
+                "08": "agu",
+                "09": "sep",
+                "10": "okt",
+                "11": "nov",
+                "12": "des",
+            }
+            tahun = data["tahunbulan"].split("-")[0]
+            bulan = bulandict[data["tahunbulan"].split("-")[1]]
+            total_pemasukan = int(saldokas.get_total_pemasukan(data)[0])
+            total_pengeluaran = int(saldokas.get_total_pengeluaran(data)[0])
+            body = {
+                "tahun": tahun,
+                "bulan": bulan,
+                "masuk:": total_pemasukan,
+                "keluar": total_pengeluaran,
+                "saldoakhir": (total_pemasukan - total_pengeluaran)
+            }
+            saldokas.post(body)
+            return {
+                "message": "SaldoKas succesfully created"
+            }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def get(self):
+        # norumah = get_raw_jwt()['identity']
+        saldokas = models.SaldoKas()
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdsaldo', help='This field cannot be blank', required=True, location=["form", "args"])
+        data = parser.parse_args()
+        try:
+            if data["kdsaldo"] == "all":
+                result = []
+                for saldokas in saldokas.get_all():
+                    result.append(
+                        {
+                            "kdsaldo": str(saldokas[0]),
+                            "tahun": str(saldokas[1]),
+                            "bulan": saldokas[3],
+                            "masuk": str(saldokas[4]),
+                            "keluar": str(saldokas[5]),
+                            "saldoakhir": str(saldokas[6])
+                        }
+                    )
+                return {
+                    "data": result,
+                    "message": "Saldo Kas succesfully retrieved"
+                }
+            else:
+                result = saldokas.get(data)
+                if result is None:
+                    return {
+                        "message": "Saldo Kas not found"
+                    }, 400
+                else:
+                    return {
+                        "data": {
+                            "kdsaldo": str(result[0]),
+                            "tahun": str(result[1]),
+                            "bulan": result[3],
+                            "masuk": str(result[4]),
+                            "keluar": str(result[5]),
+                            "saldoakhir": str(result[6])
+                        },
+                        "message": "Saldo Kas succesfully retrieved"
+                    }
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
+
+    def delete(self):
+        # emp_number = get_raw_jwt()['identity']
+        parser = reqparse.RequestParser()
+        parser.add_argument(
+            'kdsaldo', help='This field cannot be blank', required=True)
+        data = parser.parse_args()
+        saldokas = models.SaldoKas()
+        try:
+            if saldokas.delete(data) == 0:
+                return {
+                    "message": "No kdsaldo found"
+                }, 400
+            else:
+                result = {
+                    "message": "Saldo Kas succesfully deleted"
+                }
+                return result
+        except Exception as e:
+            print(e)
+            return {'message': 'Something went wrong'}, 500
 
 
 # class Login(Resource):
