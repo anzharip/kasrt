@@ -47,6 +47,10 @@ class RukunTetangga(Resource):
     @jwt_required
     def post(self):
         # emp_number = get_raw_jwt()['identity']
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'kdrw', help='This field cannot be blank', required=True)
