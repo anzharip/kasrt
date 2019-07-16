@@ -25,7 +25,10 @@ class Login(Resource):
                 }, 400
             norumah = user.get(body)[2]
             if user.verify_hash(body) is True:
-                access_token = create_access_token(identity=norumah)
+                user_claims = {
+                    "claim1": "claim1"
+                }
+                access_token = create_access_token(identity=norumah, user_claims=user_claims)
                 return {
                     'message': 'Logged in as {}'.format(data['username']),
                     'access_token': access_token
