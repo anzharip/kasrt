@@ -28,7 +28,8 @@ class Login(Resource):
                 user_claims = {
                     "pengurus": user.get(body)[6]
                 }
-                access_token = create_access_token(identity=norumah, user_claims=user_claims)
+                access_token = create_access_token(
+                    identity=norumah, user_claims=user_claims)
                 return {
                     'message': 'Logged in as {}'.format(data['username']),
                     'access_token': access_token
@@ -171,6 +172,7 @@ class RukunTetangga(Resource):
 
 
 class Warga(Resource):
+    @jwt_required
     def post(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -199,6 +201,7 @@ class Warga(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def get(self):
         # norumah = get_raw_jwt()['identity']
         warga = models.Warga()
@@ -248,6 +251,7 @@ class Warga(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def put(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -279,6 +283,7 @@ class Warga(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def delete(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -302,6 +307,7 @@ class Warga(Resource):
 
 
 class Pemasukan(Resource):
+    @jwt_required
     def post(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -326,6 +332,7 @@ class Pemasukan(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def get(self):
         # norumah = get_raw_jwt()['identity']
         pemasukan = models.Pemasukan()
@@ -377,6 +384,7 @@ class Pemasukan(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def put(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -400,6 +408,7 @@ class Pemasukan(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def delete(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -423,6 +432,7 @@ class Pemasukan(Resource):
 
 
 class Pengeluaran(Resource):
+    @jwt_required
     def post(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -441,6 +451,7 @@ class Pengeluaran(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def get(self):
         # norumah = get_raw_jwt()['identity']
         pengeluaran = models.Pengeluaran()
@@ -484,6 +495,7 @@ class Pengeluaran(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def delete(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -507,6 +519,7 @@ class Pengeluaran(Resource):
 
 
 class Iuran(Resource):
+    @jwt_required
     def post(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -527,6 +540,7 @@ class Iuran(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def get(self):
         # norumah = get_raw_jwt()['identity']
         iuran = models.Iuran()
@@ -570,6 +584,7 @@ class Iuran(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def delete(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -593,6 +608,7 @@ class Iuran(Resource):
 
 
 class SaldoKas(Resource):
+    @jwt_required
     def post(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -617,14 +633,15 @@ class SaldoKas(Resource):
             }
             tahun = data["tahunbulan"].split("-")[0]
             bulan = bulandict[data["tahunbulan"].split("-")[1]]
-            if saldokas.get_total_pemasukan(data)[0] is None: 
+            if saldokas.get_total_pemasukan(data)[0] is None:
                 total_pemasukan = 0
-            else: 
+            else:
                 total_pemasukan = int(saldokas.get_total_pemasukan(data)[0])
-            if saldokas.get_total_pengeluaran(data)[0] is None: 
+            if saldokas.get_total_pengeluaran(data)[0] is None:
                 total_pengeluaran = 0
-            else: 
-                total_pengeluaran = int(saldokas.get_total_pengeluaran(data)[0])
+            else:
+                total_pengeluaran = int(
+                    saldokas.get_total_pengeluaran(data)[0])
             body = {
                 "tahun": tahun,
                 "bulan": bulan,
@@ -640,6 +657,7 @@ class SaldoKas(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def get(self):
         # norumah = get_raw_jwt()['identity']
         saldokas = models.SaldoKas()
@@ -687,6 +705,7 @@ class SaldoKas(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
+    @jwt_required
     def delete(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
