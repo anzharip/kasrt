@@ -1,0 +1,617 @@
+{
+	"info": {
+		"_postman_id": "ffd232ca-7366-4c76-8c61-93d879078f68",
+		"name": "KasRT v1",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/login POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"username\": \"11\", \n\t\"password\": \"john doe\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/login",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/rt GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/rt?nmrt=all",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rt"
+					],
+					"query": [
+						{
+							"key": "nmrt",
+							"value": "all"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/rt POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"kdrw\": \"1\",\n    \"nmrt\": \"6\",\n    \"alamat\": \"Jiung\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/rt",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/rt PUT",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"kdrw\": \"1\",\n    \"nmrt\": \"6\",\n    \"alamat\": \"Jiunggg\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/rt",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/rt DEL",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nmrt\": \"6\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/rt",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/warga GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/warga?norumah=all",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"warga"
+					],
+					"query": [
+						{
+							"key": "norumah",
+							"value": "all"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/warga POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nmrt\": \"1\",\n    \"norumah\": \"103\",\n    \"nokk\": \"10102\",\n    \"nmkk\": \"john wick\",\n    \"statustinggal\": \"kontrak\",\n    \"pengurus\": \"0\", \n    \"password\": \"john wick\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/warga",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"warga"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/warga PUT",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nmrt\": \"1\",\n    \"norumah\": \"102\",\n    \"nokk\": \"10101\",\n    \"nmkk\": \"john wick\",\n    \"statustinggal\": \"kontrak\",\n    \"pengurus\": \"0\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/warga",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"warga"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/warga DEL",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"norumah\": \"102\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/warga",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"warga"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pemasukan GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/pemasukan?kdpemasukan=all",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pemasukan"
+					],
+					"query": [
+						{
+							"key": "kdpemasukan",
+							"value": "all"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pemasukan POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"norumah\": \"11\", \n\t\"nokk\": \"0001\", \n\t\"jumlah\": \"100000\", \n\t\"keterangan\": \"nothing\", \n\t\"dokumen_bayar\": \"asdf\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/pemasukan",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pemasukan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pemasukan PUT",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"kdpemasukan\": \"15\", \n\t\"terverifikasi\": \"1\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/pemasukan",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pemasukan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pemasukan DEL",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"kdpemasukan\": \"15\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/pemasukan",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pemasukan"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pengeluaran GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/pengeluaran?kdpengeluaran=all",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pengeluaran"
+					],
+					"query": [
+						{
+							"key": "kdpengeluaran",
+							"value": "all"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pengeluaran POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"jumlah\": \"100000\", \n\t\"keterangan\": \"perbaikan pagar rt rusak\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/pengeluaran",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pengeluaran"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/pengeluaran DEL",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"kdpengeluaran\": \"3\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/pengeluaran",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"pengeluaran"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/iuran GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/iuran?kdiuran=all",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"iuran"
+					],
+					"query": [
+						{
+							"key": "kdiuran",
+							"value": "all"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/iuran POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tahun\": \"2019\", \n\t\"bulan\": \"jun\", \n\t\"norumah\": \"12\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/iuran",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"iuran"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/iuran DEL",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"kdiuran\": \"1\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/iuran",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"iuran"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/saldokas GET",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:5000/saldokas?kdsaldo=all",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"saldokas"
+					],
+					"query": [
+						{
+							"key": "kdsaldo",
+							"value": "all"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/saldokas POST",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"tahunbulan\": \"2019-01\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/saldokas",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"saldokas"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "localhost:5000/saldokas",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"kdsaldo\": \"5\"\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/saldokas",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"saldokas"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

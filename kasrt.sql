@@ -11,7 +11,7 @@
  Target Server Version : 100314
  File Encoding         : 65001
 
- Date: 14/07/2019 17:24:15
+ Date: 16/07/2019 11:21:13
 */
 
 SET NAMES utf8mb4;
@@ -54,7 +54,14 @@ CREATE TABLE `saldokas` (
   `saldoakhir` int(10) DEFAULT NULL,
   PRIMARY KEY (`kdsaldo`) USING BTREE,
   UNIQUE KEY `saldokas_index1` (`tahun`,`bulan`) USING BTREE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of saldokas
+-- ----------------------------
+BEGIN;
+INSERT INTO `saldokas` VALUES (3, 2019, 'jul', 900000, 400000, 500000);
+COMMIT;
 
 -- ----------------------------
 -- Table structure for tr_iuran
@@ -69,14 +76,15 @@ CREATE TABLE `tr_iuran` (
   UNIQUE KEY `tr_iuran_index1` (`tahun`,`bulan`,`norumah`) USING BTREE,
   KEY `norumah` (`norumah`),
   CONSTRAINT `tr_iuran_fk1` FOREIGN KEY (`norumah`) REFERENCES `warga` (`norumah`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tr_iuran
 -- ----------------------------
 BEGIN;
-INSERT INTO `tr_iuran` VALUES (1, 2019, 'jan', 11);
 INSERT INTO `tr_iuran` VALUES (3, 2019, 'jan', 12);
+INSERT INTO `tr_iuran` VALUES (4, 2019, 'jun', 11);
+INSERT INTO `tr_iuran` VALUES (9, 2019, 'jun', 12);
 COMMIT;
 
 -- ----------------------------
@@ -104,8 +112,8 @@ CREATE TABLE `tr_pemasukan` (
 BEGIN;
 INSERT INTO `tr_pemasukan` VALUES (5, '2019-07-02 11:59:12', 11, '0001', 100000, NULL, NULL, 0);
 INSERT INTO `tr_pemasukan` VALUES (6, '2019-07-04 11:59:37', 12, '0002', 200000, NULL, NULL, 0);
-INSERT INTO `tr_pemasukan` VALUES (7, '2019-07-01 12:00:02', 13, '0003', 300000, NULL, NULL, 0);
-INSERT INTO `tr_pemasukan` VALUES (8, '2019-07-01 12:00:15', 14, '0004', 400000, NULL, NULL, 0);
+INSERT INTO `tr_pemasukan` VALUES (7, '2019-07-01 12:00:02', 13, '0003', 300000, NULL, NULL, 1);
+INSERT INTO `tr_pemasukan` VALUES (8, '2019-07-01 12:00:15', 14, '0004', 400000, NULL, NULL, 1);
 INSERT INTO `tr_pemasukan` VALUES (12, '2019-07-14 07:01:02', 11, '0001', 200000, 'something', '', 0);
 INSERT INTO `tr_pemasukan` VALUES (14, '2019-07-14 07:01:09', 11, '0001', 200000, 'something', '', 1);
 COMMIT;
@@ -117,18 +125,18 @@ DROP TABLE IF EXISTS `tr_pengeluaran`;
 CREATE TABLE `tr_pengeluaran` (
   `kdpengeluaran` int(11) NOT NULL AUTO_INCREMENT,
   `tanggal` datetime DEFAULT current_timestamp(),
-  `jumlah` varchar(255) DEFAULT NULL,
+  `jumlah` int(10) DEFAULT NULL,
   `keterangan` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`kdpengeluaran`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of tr_pengeluaran
 -- ----------------------------
 BEGIN;
-INSERT INTO `tr_pengeluaran` VALUES (1, '2019-07-14 05:21:46', '100000', 'pot bunga di depan rumah bu jane smith');
-INSERT INTO `tr_pengeluaran` VALUES (2, '2019-07-14 05:22:12', '200000', 'semen di depan rumah pak john doe');
-INSERT INTO `tr_pengeluaran` VALUES (3, '2019-07-14 07:08:29', '300000', 'pagar kantor rt');
+INSERT INTO `tr_pengeluaran` VALUES (1, '2019-07-14 05:21:46', 100000, 'pot bunga di depan rumah bu jane smith');
+INSERT INTO `tr_pengeluaran` VALUES (2, '2019-07-14 05:22:12', 200000, 'semen di depan rumah pak john doe');
+INSERT INTO `tr_pengeluaran` VALUES (5, '2019-07-16 03:11:08', 100000, 'perbaikan pagar rt rusak');
 COMMIT;
 
 -- ----------------------------
@@ -156,7 +164,7 @@ CREATE TABLE `warga` (
 -- Records of warga
 -- ----------------------------
 BEGIN;
-INSERT INTO `warga` VALUES (3, 2, 11, '0001', 'john doe', 'kontrak', 0, '$2y$12$oNulNtpHg3ntSg1NJiQR0.kmv0hyTmGCtT5wHKdmS1HOYP8yb97Bq');
+INSERT INTO `warga` VALUES (3, 2, 11, '0001', 'john doe', 'kontrak', 1, '$2y$12$oNulNtpHg3ntSg1NJiQR0.kmv0hyTmGCtT5wHKdmS1HOYP8yb97Bq');
 INSERT INTO `warga` VALUES (4, 2, 12, '0002', 'jane doe', 'milik sendiri', 0, '$2y$12$X8.O9i67XM.6T5sHIQYBQ.VIw/kB/AmsA9EoknJyFLLGt3iCJeNQC');
 INSERT INTO `warga` VALUES (5, 3, 13, '0003', 'john smith', 'kontrak', 0, '$2y$12$4YFV.IRYDa2oG30CV7YmD.8/rPoa/fgtz9ABRsLLNU5HUa9xtTszW');
 INSERT INTO `warga` VALUES (6, 3, 14, '0004', 'jane smith', 'milik sendiri', 0, '$2y$12$UmKeNK9FHNlvDAFTnNdnMuUY2sKLYiwHATriBi0lWE5nAmys65Q7a');
