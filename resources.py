@@ -26,7 +26,7 @@ class Login(Resource):
             norumah = user.get(body)[2]
             if user.verify_hash(body) is True:
                 user_claims = {
-                    "claim1": "claim1"
+                    "pengurus": user.get(body)[6]
                 }
                 access_token = create_access_token(identity=norumah, user_claims=user_claims)
                 return {
