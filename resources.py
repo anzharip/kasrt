@@ -620,9 +620,8 @@ class SaldoKas(Resource):
                 "saldoakhir": (total_pemasukan - total_pengeluaran)
             }
             print(
-                body
+                saldokas.post(body)
             )
-            saldokas.post(body)
             return {
                 "message": "SaldoKas succesfully created"
             }
