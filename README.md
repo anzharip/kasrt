@@ -15,12 +15,12 @@ HTTP REST API PoC for KASRT written in Python 3.
 * resources.Pengeluaran [done]
 * resources.Iuran [done]
 * resources.SaldoKas [done]
-* Auth & Permission for resources.RukunTetangga [on-progress]
-* Auth & Permission for resources.Warga [on-progress]
-* Auth & Permission for resources.Pemasukan [on-progress]
-* Auth & Permission for resources.Pengeluaran [on-progress]
-* Auth & Permission for resources.Iuran [on-progress]
-* Auth & Permission for resources.SaldoKas [on-progress]
+* Auth & Permission for resources.RukunTetangga [done]
+* Auth & Permission for resources.Warga [done]
+* Auth & Permission for resources.Pemasukan [done]
+* Auth & Permission for resources.Pengeluaran [done]
+* Auth & Permission for resources.Iuran [done]
+* Auth & Permission for resources.SaldoKas [done]
 
 # To use: 
 1. Clone the repo. 
