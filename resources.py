@@ -610,11 +610,11 @@ class SaldoKas(Resource):
             }
             tahun = data["tahunbulan"].split("-")[0]
             bulan = bulandict[data["tahunbulan"].split("-")[1]]
-            if isinstance(saldokas.get_total_pemasukan(data)[0], None): 
+            if saldokas.get_total_pemasukan(data)[0] is None: 
                 total_pemasukan = 0
             else: 
                 total_pemasukan = int(saldokas.get_total_pemasukan(data)[0])
-            if isinstance(saldokas.get_total_pengeluaran(data)[0], None): 
+            if saldokas.get_total_pengeluaran(data)[0] is None: 
                 total_pengeluaran = 0
             else: 
                 total_pengeluaran = int(saldokas.get_total_pengeluaran(data)[0])
