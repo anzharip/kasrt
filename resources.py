@@ -14,7 +14,7 @@ class Login(Resource):
             'password', help='This field cannot be blank', required=True)
         data = parser.parse_args()
         body = {
-            "norumah": data["username"],
+            "username": data["username"],
             "password": data["password"]
         }
         user = models.Warga()

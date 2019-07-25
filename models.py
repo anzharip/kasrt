@@ -9,9 +9,12 @@ import datetime
 class Warga:
 
     def get(self, body):
-        field = "`kdwarga`, `nmrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`"
+        kdrw = body["username"][0:1]
+        kdrt = body["username"][2:3]
+        norumah = body["username"][4:]
+        field = "`kdrw`, `kdrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`"
         table = "`tbl_warga`"
-        sql_filter = "`norumah` = '%s'" % body["norumah"]
+        sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (kdrw, kdrt, norumah)
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
             field, table, sql_filter)
         connection = db.open_connection()
@@ -21,8 +24,8 @@ class Warga:
         return result
 
     def get_all(self):
-        field = "`kdwarga`, `nmrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`"
-        table = "`warga`"
+        field = "`kdrw`, `kdrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`"
+        table = "`tbl_warga`"
         statement = "SELECT %s FROM %s LIMIT 0,1000" % (
             field, table)
         connection = db.open_connection()
@@ -32,9 +35,12 @@ class Warga:
         return result
 
     def verify_hash(self, body):
-        field = "`norumah`, `password`"
-        table = "`warga`"
-        sql_filter = "`norumah` = '%s'" % body["norumah"]
+        kdrw = body["username"][0:1]
+        kdrt = body["username"][2:3]
+        norumah = body["username"][4:]
+        field = "`kdrw`, `kdrt`, `norumah`, `password`"
+        table = "`tbl_warga`"
+        sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (kdrw, kdrt, norumah)
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
             field, table, sql_filter)
         connection = db.open_connection()
