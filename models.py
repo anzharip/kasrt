@@ -9,8 +9,8 @@ import datetime
 class Warga:
 
     def get(self, body):
-        kdrw = body["username"][0:1]
-        kdrt = body["username"][2:3]
+        kdrw = body["username"][0:2]
+        kdrt = body["username"][2:4]
         norumah = body["username"][4:]
         field = "`kdrw`, `kdrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`"
         table = "`tbl_warga`"
@@ -35,8 +35,8 @@ class Warga:
         return result
 
     def verify_hash(self, body):
-        kdrw = body["username"][0:1]
-        kdrt = body["username"][2:3]
+        kdrw = body["username"][0:2]
+        kdrt = body["username"][2:4]
         norumah = body["username"][4:]
         field = "`kdrw`, `kdrt`, `norumah`, `password`"
         table = "`tbl_warga`"
