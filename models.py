@@ -10,7 +10,7 @@ class Warga:
 
     def get(self, body):
         field = "`kdwarga`, `nmrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`"
-        table = "`warga`"
+        table = "`tbl_warga`"
         sql_filter = "`norumah` = '%s'" % body["norumah"]
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
             field, table, sql_filter)
