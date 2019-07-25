@@ -38,7 +38,7 @@ class Warga:
         kdrw = body["username"][0:2]
         kdrt = body["username"][2:4]
         norumah = body["username"][4:]
-        field = "`kdrw`, `kdrt`, `norumah`, `password`"
+        field = "`kdrw`, `kdrt`, `norumah`, `passwd`"
         table = "`tbl_warga`"
         sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (kdrw, kdrt, norumah)
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
