@@ -211,7 +211,7 @@ class Warga(Resource):
         parser.add_argument(
             'pengurus', help='This field cannot be blank', required=True)
         parser.add_argument(
-            'password', help='This field cannot be blank', required=True)
+            'passwd', help='This field cannot be blank', required=True)
         data = parser.parse_args()
         try:
             warga = models.Warga()
