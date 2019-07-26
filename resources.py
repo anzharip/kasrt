@@ -9,24 +9,28 @@ class Login(Resource):
     def post(self):
         parser = reqparse.RequestParser()
         parser.add_argument(
-            'username', help='This field cannot be blank', required=True)
+            'kdrw', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrt', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'norumah', help='This field cannot be blank', required=True)
         parser.add_argument(
             'passwd', help='This field cannot be blank', required=True)
         data = parser.parse_args()
-        body = {
-            "username": data["username"],
-            "passwd": data["passwd"]
-        }
+        # body = {
+        #     "username": data["username"],
+        #     "passwd": data["passwd"]
+        # }
         user = models.Warga()
         try:
-            if user.get(body) is None:
+            if user.get(data) is None:
                 return {
                     "message": "Username not found"
                 }, 400
-            norumah = user.get(body)[2]
-            if user.verify_hash(body) is True:
+            norumah = user.get(data)[2]
+            if user.verify_hash(data) is True:
                 user_claims = {
-                    "pengurus": user.get(body)[6]
+                    "pengurus": user.get(data)[6]
                 }
                 access_token = create_access_token(
                     identity=norumah, user_claims=user_claims)

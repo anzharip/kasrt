@@ -9,13 +9,10 @@ import datetime
 class Warga:
 
     def get(self, body):
-        kdrw = body["username"][0:2]
-        kdrt = body["username"][2:4]
-        norumah = body["username"][4:]
         field = "`kdrw`, `kdrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`"
         table = "`tbl_warga`"
         sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (
-            kdrw, kdrt, norumah)
+            body["kdrw"], body["kdrt"], body["norumah"])
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
             field, table, sql_filter)
         connection = db.open_connection()
