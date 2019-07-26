@@ -14,7 +14,8 @@ class Warga:
         norumah = body["username"][4:]
         field = "`kdrw`, `kdrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`"
         table = "`tbl_warga`"
-        sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (kdrw, kdrt, norumah)
+        sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (
+            kdrw, kdrt, norumah)
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
             field, table, sql_filter)
         connection = db.open_connection()
@@ -40,7 +41,8 @@ class Warga:
         norumah = body["username"][4:]
         field = "`kdrw`, `kdrt`, `norumah`, `passwd`"
         table = "`tbl_warga`"
-        sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (kdrw, kdrt, norumah)
+        sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (
+            kdrw, kdrt, norumah)
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
             field, table, sql_filter)
         connection = db.open_connection()
@@ -53,11 +55,11 @@ class Warga:
 
     def post(self, body):
         password_hashed = bcrypt.hashpw(
-            bytes(body["password"], "utf-8"), bcrypt.gensalt())
-        field = "(`nmrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`, `password`)"
-        values = "('%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
-            body["nmrt"], body["norumah"], body["nokk"], body["nmkk"], body["statustinggal"], body["pengurus"], password_hashed.decode("utf-8"))
-        table = "`warga`"
+            bytes(body["passwd"], "utf-8"), bcrypt.gensalt())
+        field = "(`kdrw`, `kdrt`, `norumah`, `nokk`, `nmkk`, `statustinggal`, `pengurus`, `passwd`)"
+        values = "('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
+            body["kdrw"], body["kdrt"], body["norumah"], body["nokk"], body["nmkk"], body["statustinggal"], body["pengurus"], password_hashed.decode("utf-8"))
+        table = "`tbl_warga`"
         statement = "INSERT INTO %s %s VALUES %s" % (
             table, field, values)
         connection = db.open_connection()
@@ -68,10 +70,11 @@ class Warga:
         return result
 
     def put(self, body):
-        field = "`nmrt`='%s', `nokk`='%s', `nmkk`='%s', `statustinggal`='%s', `pengurus`='%s'" % (
-            body['nmrt'], body['nokk'], body['nmkk'], body['statustinggal'], body['pengurus'])
-        table = "`warga`"
-        sql_filter = "`norumah`='%s'" % (body['norumah'])
+        field = "`nokk`='%s', `nmkk`='%s', `statustinggal`='%s', `pengurus`='%s'" % (
+            body['nokk'], body['nmkk'], body['statustinggal'], body['pengurus'])
+        table = "`tbl_warga`"
+        sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (
+            body['kdrw'], body['kdrt'], body['norumah'])
         statement = "UPDATE %s SET %s WHERE %s" % (
             table, field, sql_filter)
         connection = db.open_connection()
@@ -82,10 +85,11 @@ class Warga:
 
     def put_password(self, body):
         password_hashed = bcrypt.hashpw(
-            bytes(body["password"], "utf-8"), bcrypt.gensalt())
-        field = "`password`='%s'" % (password_hashed.decode("utf-8"))
-        table = "`warga`"
-        sql_filter = "`norumah`='%s'" % (body['norumah'])
+            bytes(body["passwd"], "utf-8"), bcrypt.gensalt())
+        field = "`passwd`='%s'" % (password_hashed.decode("utf-8"))
+        table = "`tbl_warga`"
+        sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (
+            body['kdrw'], body['kdrt'], body['norumah'])
         statement = "UPDATE %s SET %s WHERE %s" % (
             table, field, sql_filter)
         connection = db.open_connection()
@@ -95,8 +99,9 @@ class Warga:
         return cursor.rowcount
 
     def delete(self, body):
-        table = "`warga`"
-        sql_filter = "`norumah` = %s" % (body["norumah"])
+        table = "`tbl_warga`"
+        sql_filter = "`kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (
+            body['kdrw'], body['kdrt'], body['norumah'])
         statement = "DELETE FROM %s WHERE %s" % (
             table, sql_filter)
         connection = db.open_connection()
@@ -106,72 +111,72 @@ class Warga:
         return cursor.rowcount
 
 
-class RukunTetangga:
-    def get(self, body):
-        field = "`kdrt`, `nmrt`, `kdrw`, `alamat`"
-        table = "`rt`"
-        sql_filter = "`nmrt` = '%s'" % body["nmrt"]
-        statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
-            field, table, sql_filter)
-        connection = db.open_connection()
-        cursor = db.sql_cursor(connection, statement)
-        result = cursor.fetchone()
-        db.close_connection(connection, cursor)
-        return result
+# class RukunTetangga:
+#     def get(self, body):
+#         field = "`kdrt`, `nmrt`, `kdrw`, `alamat`"
+#         table = "`rt`"
+#         sql_filter = "`nmrt` = '%s'" % body["nmrt"]
+#         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
+#             field, table, sql_filter)
+#         connection = db.open_connection()
+#         cursor = db.sql_cursor(connection, statement)
+#         result = cursor.fetchone()
+#         db.close_connection(connection, cursor)
+#         return result
 
-    def get_all(self):
-        field = "`kdrt`, `kdrw`, `nmrt`, `alamat`"
-        table = "`rt`"
-        statement = "SELECT %s FROM %s LIMIT 0,1000" % (
-            field, table)
-        connection = db.open_connection()
-        cursor = db.sql_cursor(connection, statement)
-        result = cursor.fetchall()
-        db.close_connection(connection, cursor)
-        return result
+#     def get_all(self):
+#         field = "`kdrt`, `kdrw`, `nmrt`, `alamat`"
+#         table = "`rt`"
+#         statement = "SELECT %s FROM %s LIMIT 0,1000" % (
+#             field, table)
+#         connection = db.open_connection()
+#         cursor = db.sql_cursor(connection, statement)
+#         result = cursor.fetchall()
+#         db.close_connection(connection, cursor)
+#         return result
 
-    def post(self, body):
-        field = "(`kdrw`, `nmrt`, `alamat`)"
-        values = "('%s', '%s', '%s')" % (
-            body["kdrw"], body["nmrt"], body["alamat"])
-        table = "`rt`"
-        statement = "INSERT INTO %s %s VALUES %s" % (
-            table, field, values)
-        connection = db.open_connection()
-        cursor = db.sql_cursor(connection, statement)
-        connection.commit()
-        db.close_connection(connection, cursor)
-        result = cursor.rowcount
-        return result
+#     def post(self, body):
+#         field = "(`kdrw`, `nmrt`, `alamat`)"
+#         values = "('%s', '%s', '%s')" % (
+#             body["kdrw"], body["nmrt"], body["alamat"])
+#         table = "`rt`"
+#         statement = "INSERT INTO %s %s VALUES %s" % (
+#             table, field, values)
+#         connection = db.open_connection()
+#         cursor = db.sql_cursor(connection, statement)
+#         connection.commit()
+#         db.close_connection(connection, cursor)
+#         result = cursor.rowcount
+#         return result
 
-    def put(self, body):
-        field = "`kdrw`='%s', `alamat`='%s'" % (
-            body['kdrw'], body['alamat'])
-        table = "`rt`"
-        sql_filter = "`nmrt`='%s'" % (body['nmrt'])
-        statement = "UPDATE %s SET %s WHERE %s" % (
-            table, field, sql_filter)
-        connection = db.open_connection()
-        cursor = db.sql_cursor(connection, statement)
-        connection.commit()
-        db.close_connection(connection, cursor)
-        return cursor.rowcount
+#     def put(self, body):
+#         field = "`kdrw`='%s', `alamat`='%s'" % (
+#             body['kdrw'], body['alamat'])
+#         table = "`rt`"
+#         sql_filter = "`nmrt`='%s'" % (body['nmrt'])
+#         statement = "UPDATE %s SET %s WHERE %s" % (
+#             table, field, sql_filter)
+#         connection = db.open_connection()
+#         cursor = db.sql_cursor(connection, statement)
+#         connection.commit()
+#         db.close_connection(connection, cursor)
+#         return cursor.rowcount
 
-    def delete(self, body):
-        table = "`rt`"
-        sql_filter = "`nmrt` = %s" % (body["nmrt"])
-        statement = "DELETE FROM %s WHERE %s" % (
-            table, sql_filter)
-        connection = db.open_connection()
-        cursor = db.sql_cursor(connection, statement)
-        connection.commit()
-        db.close_connection(connection, cursor)
-        return cursor.rowcount
+#     def delete(self, body):
+#         table = "`rt`"
+#         sql_filter = "`nmrt` = %s" % (body["nmrt"])
+#         statement = "DELETE FROM %s WHERE %s" % (
+#             table, sql_filter)
+#         connection = db.open_connection()
+#         cursor = db.sql_cursor(connection, statement)
+#         connection.commit()
+#         db.close_connection(connection, cursor)
+#         return cursor.rowcount
 
 
 class Pemasukan:
     def get(self, body):
-        field = "`kdpemasukan`, `tanggal`, `norumah`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`, `terverifikasi`"
+        field = "`kdpemasukan`, `tanggal`, `norumah`, `kdrw`, `kdrt`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`, `terverifikasi`"
         table = "`tr_pemasukan`"
         sql_filter = "`kdpemasukan` = '%s'" % body["kdpemasukan"]
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
@@ -183,7 +188,7 @@ class Pemasukan:
         return result
 
     def get_all(self):
-        field = "`kdpemasukan`, `tanggal`, `norumah`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`, `terverifikasi`"
+        field = "`kdpemasukan`, `tanggal`, `norumah`, `kdrw`, `kdrt`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`, `terverifikasi`"
         table = "`tr_pemasukan`"
         statement = "SELECT %s FROM %s LIMIT 0,1000" % (
             field, table)
@@ -194,9 +199,9 @@ class Pemasukan:
         return result
 
     def post(self, body):
-        field = "(`norumah`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`)"
-        values = "('%s', '%s', '%s', '%s', '%s')" % (
-            body["norumah"], body["nokk"], body["jumlah"], body["keterangan"], body["dokumen_bayar"],)
+        field = "(`norumah`, `kdrw`, `kdrt`, `nokk`, `jumlah`, `keterangan`, `dokumen_sbayar`)"
+        values = "('%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
+            body["norumah"], body["kdrw"], body["kdrt"], body["nokk"], body["jumlah"], body["keterangan"], body["dokumen_bayar"],)
         table = "`tr_pemasukan`"
         statement = "INSERT INTO %s %s VALUES %s" % (
             table, field, values)
@@ -284,9 +289,10 @@ class Pengeluaran:
 
 class Iuran:
     def get(self, body):
-        field = "`kdiuran`, `tahun`, `bulan`, `norumah`"
+        field = "`tahun`, `kdrw`, `kdrt`, `norumah`, `jan`, `feb`, `mar`, `apr`, `may`, `jun`, `jul`, `aug`, `sep`, `oct`, `nop`, `des`"
         table = "`tr_iuran`"
-        sql_filter = "`kdiuran` = '%s'" % body["kdiuran"]
+        sql_filter = "`tahun` = '%s' AND `kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (
+            body["tahun"], body["kdrw"], body["kdrt"], body["norumah"])
         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
             field, table, sql_filter)
         connection = db.open_connection()
@@ -296,7 +302,7 @@ class Iuran:
         return result
 
     def get_all(self):
-        field = "`kdiuran`, `tahun`, `bulan`, `norumah`"
+        field = "`tahun`, `kdrw`, `kdrt`, `norumah`, `jan`, `feb`, `mar`, `apr`, `may`, `jun`, `jul`, `aug`, `sep`, `oct`, `nop`, `des`"
         table = "`tr_iuran`"
         statement = "SELECT %s FROM %s LIMIT 0,1000" % (
             field, table)
@@ -307,9 +313,9 @@ class Iuran:
         return result
 
     def post(self, body):
-        field = "(`tahun`, `bulan`, `norumah`)"
-        values = "('%s', '%s', '%s')" % (
-            body["tahun"], body["bulan"], body["norumah"])
+        field = "(`tahun`, `kdrw`, `kdrt`, `norumah`, `jan`, `feb`, `mar`, `apr`, `may`, `jun`, `jul`, `aug`, `sep`, `oct`, `nop`, `des`)"
+        values = "('%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
+            body["tahun"], body["kdrw"], body["kdrt"], body["norumah"], body["jan"], body["feb"], body["mar"], body["apr"], body["may"], body["jun"], body["jul"], body["aug"], body["sep"], body["oct"], body["nop"], body["des"])
         table = "`tr_iuran`"
         statement = "INSERT INTO %s %s VALUES %s" % (
             table, field, values)
@@ -320,9 +326,24 @@ class Iuran:
         result = cursor.rowcount
         return result
 
+    def put(self, body):
+        field = "`jan` = %s, `feb` = %s, `mar` = %s, `apr` = %s, `may` = %s, `jun` = %s, `jul` = %s, `aug` = %s, `sep` = %s, `oct` = %s, `nop` = %s, `des` = %s" % (
+            body['jan'], body['feb'], body['mar'], body['apr'], body['may'], body['jun'], body['jul'], body['aug'], body['sep'], body['oct'], body['nop'], body['des'])
+        table = "`tr_iuran`"
+        sql_filter = "`tahun` = '%s' AND `kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (
+            body["tahun"], body["kdrw"], body["kdrt"], body["norumah"])
+        statement = "UPDATE %s SET %s WHERE %s" % (
+            table, field, sql_filter)
+        connection = db.open_connection()
+        cursor = db.sql_cursor(connection, statement)
+        connection.commit()
+        db.close_connection(connection, cursor)
+        return cursor.rowcount
+
     def delete(self, body):
         table = "`tr_iuran`"
-        sql_filter = "`kdiuran` = %s" % (body["kdiuran"])
+        sql_filter = "`tahun` = '%s' AND `kdrw` = '%s' AND `kdrt` = '%s' AND `norumah` = '%s'" % (
+            body["tahun"], body["kdrw"], body["kdrt"], body["norumah"])
         statement = "DELETE FROM %s WHERE %s" % (
             table, sql_filter)
         connection = db.open_connection()
@@ -357,7 +378,6 @@ class SaldoKas:
         return result
 
     def get_total_pemasukan(self, body):
-        # SELECT FORMAT(SUM(`jumlah`),1) AS total_pemasukan FROM `kasrt`.`tr_pemasukan` WHERE `terverifikasi`=1 AND `tanggal`>='2019-07-01' AND `tanggal`<='2019-07-31' LIMIT 0,1000
         field = "SUM(`jumlah`) AS total_pemasukan"
         table = "`tr_pemasukan`"
         sql_filter = "`terverifikasi`=1 AND `tanggal`>='%s-01' AND `tanggal`<='%s-31'" % (
@@ -371,7 +391,6 @@ class SaldoKas:
         return result
 
     def get_total_pengeluaran(self, body):
-        # SELECT FORMAT(SUM(`jumlah`),1) AS total_pengeluaran FROM `kasrt`.`tr_pengeluaran` WHERE `tanggal`>='2019-07-01' AND `tanggal`<='2019-07-31' LIMIT 0,1000
         field = "SUM(`jumlah`) AS total_pengeluaran"
         table = "`tr_pengeluaran`"
         sql_filter = "`tanggal`>='%s-01' AND `tanggal`<='%s-31'" % (

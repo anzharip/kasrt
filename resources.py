@@ -43,148 +43,148 @@ class Login(Resource):
             return {'message': 'Something went wrong'}, 500
 
 
-class RukunTetangga(Resource):
-    # @jwt_required
-    def post(self):
-        # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
-        parser = reqparse.RequestParser()
-        parser.add_argument(
-            'kdrw', help='This field cannot be blank', required=True)
-        parser.add_argument(
-            'nmrt', help='This field cannot be blank', required=True)
-        parser.add_argument(
-            'alamat', help='This field cannot be blank', required=True)
-        data = parser.parse_args()
-        body = {
-            "kdrw": data["kdrw"],
-            "nmrt": data["nmrt"],
-            "alamat": data["alamat"]
-        }
-        try:
-            rt = models.RukunTetangga()
-            rt.post(body)
-            return {
-                "message": "RT succesfully created"
-            }
-        except Exception as e:
-            print(e)
-            return {'message': 'Something went wrong'}, 500
+# class RukunTetangga(Resource):
+#     # @jwt_required
+#     def post(self):
+#         # Only allow Pengurus
+#         # if get_raw_jwt()['user_claims']['pengurus'] == 0:
+#         #     return {
+#         #         "message": "You are not authorized to access this endpoint"
+#         #     }, 401
+#         parser = reqparse.RequestParser()
+#         parser.add_argument(
+#             'kdrw', help='This field cannot be blank', required=True)
+#         parser.add_argument(
+#             'nmrt', help='This field cannot be blank', required=True)
+#         parser.add_argument(
+#             'alamat', help='This field cannot be blank', required=True)
+#         data = parser.parse_args()
+#         body = {
+#             "kdrw": data["kdrw"],
+#             "nmrt": data["nmrt"],
+#             "alamat": data["alamat"]
+#         }
+#         try:
+#             rt = models.RukunTetangga()
+#             rt.post(body)
+#             return {
+#                 "message": "RT succesfully created"
+#             }
+#         except Exception as e:
+#             print(e)
+#             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
-    def get(self):
-        # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
-        rt = models.RukunTetangga()
-        parser = reqparse.RequestParser()
-        parser.add_argument(
-            'nmrt', help='This field cannot be blank', required=True, location=["form", "args"])
-        data = parser.parse_args()
-        try:
-            if data["nmrt"] == "all":
-                result = []
-                for rt in rt.get_all():
-                    result.append(
-                        {
-                            "kdrt": str(rt[0]),
-                            "kdrw": str(rt[1]),
-                            "nmrt": str(rt[2]),
-                            "alamat": rt[3]
-                        }
-                    )
-                return {
-                    "data": result,
-                    "message": "RTs succesfully retrieved"
-                }
-            else:
-                body = {
-                    "nmrt": data["nmrt"]
-                }
-                result = rt.get(body)
-                if result is None:
-                    return {
-                        "message": "RT not found"
-                    }, 400
-                else:
-                    return {
-                        "data": {
-                            "kdrt": str(result[0]),
-                            "kdrw": str(result[1]),
-                            "nmrt": str(result[2]),
-                            "alamat": result[3]
-                        },
-                        "message": "RT succesfully retrieved"
-                    }
-        except Exception as e:
-            print(e)
-            return {'message': 'Something went wrong'}, 500
+#     # @jwt_required
+#     def get(self):
+#         # Only allow Pengurus
+#         # if get_raw_jwt()['user_claims']['pengurus'] == 0:
+#         #     return {
+#         #         "message": "You are not authorized to access this endpoint"
+#         #     }, 401
+#         rt = models.RukunTetangga()
+#         parser = reqparse.RequestParser()
+#         parser.add_argument(
+#             'nmrt', help='This field cannot be blank', required=True, location=["form", "args"])
+#         data = parser.parse_args()
+#         try:
+#             if data["nmrt"] == "all":
+#                 result = []
+#                 for rt in rt.get_all():
+#                     result.append(
+#                         {
+#                             "kdrt": str(rt[0]),
+#                             "kdrw": str(rt[1]),
+#                             "nmrt": str(rt[2]),
+#                             "alamat": rt[3]
+#                         }
+#                     )
+#                 return {
+#                     "data": result,
+#                     "message": "RTs succesfully retrieved"
+#                 }
+#             else:
+#                 body = {
+#                     "nmrt": data["nmrt"]
+#                 }
+#                 result = rt.get(body)
+#                 if result is None:
+#                     return {
+#                         "message": "RT not found"
+#                     }, 400
+#                 else:
+#                     return {
+#                         "data": {
+#                             "kdrt": str(result[0]),
+#                             "kdrw": str(result[1]),
+#                             "nmrt": str(result[2]),
+#                             "alamat": result[3]
+#                         },
+#                         "message": "RT succesfully retrieved"
+#                     }
+#         except Exception as e:
+#             print(e)
+#             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
-    def put(self):
-        # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
-        parser = reqparse.RequestParser()
-        parser.add_argument(
-            'nmrt', help='This field cannot be blank', required=True)
-        parser.add_argument(
-            'kdrw', help='This field cannot be blank', required=True)
-        parser.add_argument(
-            'alamat', help='This field cannot be blank', required=True)
-        data = parser.parse_args()
-        rt = models.RukunTetangga()
-        body = {
-            "nmrt": data["nmrt"],
-            "kdrw": data["kdrw"],
-            "alamat": data["alamat"]
-        }
-        try:
-            if rt.put(body) == 0:
-                return {
-                    "message": "RT not updated, no change found on submitted data or no id found"
-                }
-            else:
-                result = {
-                    "message": "RT succesfully updated"
-                }
-                return result
-        except Exception as e:
-            print(e)
-            return {'message': 'Something went wrong'}, 500
+#     # @jwt_required
+#     def put(self):
+#         # Only allow Pengurus
+#         # if get_raw_jwt()['user_claims']['pengurus'] == 0:
+#         #     return {
+#         #         "message": "You are not authorized to access this endpoint"
+#         #     }, 401
+#         parser = reqparse.RequestParser()
+#         parser.add_argument(
+#             'nmrt', help='This field cannot be blank', required=True)
+#         parser.add_argument(
+#             'kdrw', help='This field cannot be blank', required=True)
+#         parser.add_argument(
+#             'alamat', help='This field cannot be blank', required=True)
+#         data = parser.parse_args()
+#         rt = models.RukunTetangga()
+#         body = {
+#             "nmrt": data["nmrt"],
+#             "kdrw": data["kdrw"],
+#             "alamat": data["alamat"]
+#         }
+#         try:
+#             if rt.put(body) == 0:
+#                 return {
+#                     "message": "RT not updated, no change found on submitted data or no id found"
+#                 }
+#             else:
+#                 result = {
+#                     "message": "RT succesfully updated"
+#                 }
+#                 return result
+#         except Exception as e:
+#             print(e)
+#             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
-    def delete(self):
-        # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
-        parser = reqparse.RequestParser()
-        parser.add_argument(
-            'nmrt', help='This field cannot be blank', required=True)
-        data = parser.parse_args()
-        rt = models.RukunTetangga()
-        try:
-            if rt.delete(data) == 0:
-                return {
-                    "message": "No nmrt found"
-                }, 400
-            else:
-                result = {
-                    "message": "RT succesfully deleted"
-                }
-                return result
-        except Exception as e:
-            print(e)
-            return {'message': 'Something went wrong'}, 500
+#     # @jwt_required
+#     def delete(self):
+#         # Only allow Pengurus
+#         # if get_raw_jwt()['user_claims']['pengurus'] == 0:
+#         #     return {
+#         #         "message": "You are not authorized to access this endpoint"
+#         #     }, 401
+#         parser = reqparse.RequestParser()
+#         parser.add_argument(
+#             'nmrt', help='This field cannot be blank', required=True)
+#         data = parser.parse_args()
+#         rt = models.RukunTetangga()
+#         try:
+#             if rt.delete(data) == 0:
+#                 return {
+#                     "message": "No nmrt found"
+#                 }, 400
+#             else:
+#                 result = {
+#                     "message": "RT succesfully deleted"
+#                 }
+#                 return result
+#         except Exception as e:
+#             print(e)
+#             return {'message': 'Something went wrong'}, 500
 
 
 class Warga(Resource):
@@ -197,7 +197,9 @@ class Warga(Resource):
         #     }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
-            'nmrt', help='This field cannot be blank', required=True)
+            'kdrw', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrt', help='This field cannot be blank', required=True)
         parser.add_argument(
             'norumah', help='This field cannot be blank', required=True)
         parser.add_argument(
@@ -231,6 +233,10 @@ class Warga(Resource):
         warga = models.Warga()
         parser = reqparse.RequestParser()
         parser.add_argument(
+            'kdrw', help='This field cannot be blank', required=True, location=["form", "args"])
+        parser.add_argument(
+            'kdrt', help='This field cannot be blank', required=True, location=["form", "args"])
+        parser.add_argument(
             'norumah', help='This field cannot be blank', required=True, location=["form", "args"])
         data = parser.parse_args()
         try:
@@ -239,8 +245,8 @@ class Warga(Resource):
                 for warga in warga.get_all():
                     result.append(
                         {
-                            "kdwarga": str(warga[0]),
-                            "nmrt": str(warga[1]),
+                            "kdrw": str(warga[0]),
+                            "kdrt": str(warga[1]),
                             "norumah": str(warga[2]),
                             "nokk": str(warga[3]),
                             "nmkk": warga[4],
@@ -261,8 +267,8 @@ class Warga(Resource):
                 else:
                     return {
                         "data": {
-                            "kdwarga": str(result[0]),
-                            "nmrt": str(result[1]),
+                            "kdrw": str(result[0]),
+                            "kdrt": str(result[1]),
                             "norumah": str(result[2]),
                             "nokk": str(result[3]),
                             "nmkk": result[4],
@@ -284,7 +290,9 @@ class Warga(Resource):
         #     }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
-            'nmrt', help='This field cannot be blank', required=True)
+            'kdrw', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrt', help='This field cannot be blank', required=True)
         parser.add_argument(
             'norumah', help='This field cannot be blank', required=True)
         parser.add_argument(
@@ -320,13 +328,17 @@ class Warga(Resource):
         #     }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
+            'kdrw', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrt', help='This field cannot be blank', required=True)
+        parser.add_argument(
             'norumah', help='This field cannot be blank', required=True)
         data = parser.parse_args()
         warga = models.Warga()
         try:
             if warga.delete(data) == 0:
                 return {
-                    "message": "No norumah found"
+                    "message": "No kdrw, kdrt, and norumah found"
                 }, 400
             else:
                 result = {
@@ -345,6 +357,10 @@ class Pemasukan(Resource):
         parser = reqparse.RequestParser()
         parser.add_argument(
             'norumah', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrw', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrt', help='This field cannot be blank', required=True)
         parser.add_argument(
             'nokk', help='This field cannot be blank', required=True)
         parser.add_argument(
@@ -381,11 +397,13 @@ class Pemasukan(Resource):
                             "kdpemasukan": str(pemasukan[0]),
                             "tanggal": str(pemasukan[1]),
                             "norumah": str(pemasukan[2]),
-                            "nokk": str(pemasukan[3]),
-                            "jumlah": str(pemasukan[4]),
-                            "keterangan": pemasukan[5],
-                            "dokumen_bayar": str(pemasukan[6]),
-                            "terverifikasi": str(pemasukan[7])
+                            "kdrw": str(pemasukan[3]),
+                            "kdrt": str(pemasukan[4]),
+                            "nokk": str(pemasukan[5]),
+                            "jumlah": str(pemasukan[6]),
+                            "keterangan": pemasukan[7],
+                            "dokumen_bayar": str(pemasukan[8]),
+                            "terverifikasi": str(pemasukan[9])
                         }
                     )
                 return {
@@ -404,11 +422,13 @@ class Pemasukan(Resource):
                             "kdpemasukan": str(result[0]),
                             "tanggal": str(result[1]),
                             "norumah": str(result[2]),
-                            "nokk": str(result[3]),
-                            "jumlah": str(result[4]),
-                            "keterangan": str(result[5]),
-                            "dokumen_bayar": str(result[6]),
-                            "terverifikasi": str(result[7])
+                            "kdrw": str(result[3]),
+                            "kdrt": str(result[4]),
+                            "nokk": str(result[5]),
+                            "jumlah": str(result[6]),
+                            "keterangan": str(result[7]),
+                            "dokumen_bayar": str(result[8]),
+                            "terverifikasi": str(result[9])
                         },
                         "message": "Pemasukan succesfully retrieved"
                     }
@@ -582,9 +602,35 @@ class Iuran(Resource):
         parser.add_argument(
             'tahun', help='This field cannot be blank', required=True)
         parser.add_argument(
-            'bulan', help='This field cannot be blank', required=True)
+            'kdrw', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrt', help='This field cannot be blank', required=True)
         parser.add_argument(
             'norumah', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'jan', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'feb', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'mar', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'apr', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'may', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'jun', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'jul', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'aug', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'sep', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'oct', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'nop', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'des', help='This field cannot be blank', required=True)
         data = parser.parse_args()
         try:
             iuran = models.Iuran()
@@ -614,10 +660,22 @@ class Iuran(Resource):
                 for iuran in iuran.get_all():
                     result.append(
                         {
-                            "kdiuran": str(iuran[0]),
-                            "tahun": str(iuran[1]),
-                            "bulan": iuran[2],
-                            "norumah": str(iuran[3])
+                            "tahun": str(iuran[0]),
+                            "kdrw": str(iuran[1]),
+                            "kdrt": str(iuran[2]),
+                            "norumah": str(iuran[3]),
+                            "jan": str(iuran[4]),
+                            "feb": str(iuran[5]),
+                            "mar": str(iuran[6]),
+                            "apr": str(iuran[7]),
+                            "may": str(iuran[8]),
+                            "jun": str(iuran[9]),
+                            "jul": str(iuran[10]),
+                            "aug": str(iuran[11]),
+                            "sep": str(iuran[12]),
+                            "oct": str(iuran[13]),
+                            "nop": str(iuran[14]),
+                            "dec": str(iuran[15]),
                         }
                     )
                 return {
@@ -633,10 +691,22 @@ class Iuran(Resource):
                 else:
                     return {
                         "data": {
-                            "kdiuran": str(result[0]),
-                            "tahun": str(result[1]),
-                            "bulan": result[2],
-                            "norumah": str(result[3])
+                            "tahun": str(result[0]),
+                            "kdrw": str(result[1]),
+                            "kdrt": str(result[2]),
+                            "norumah": str(result[3]),
+                            "jan": str(result[4]),
+                            "feb": str(result[5]),
+                            "mar": str(result[6]),
+                            "apr": str(result[7]),
+                            "may": str(result[8]),
+                            "jun": str(result[9]),
+                            "jul": str(result[10]),
+                            "aug": str(result[11]),
+                            "sep": str(result[12]),
+                            "oct": str(result[13]),
+                            "nop": str(result[14]),
+                            "dec": str(result[15]),
                         },
                         "message": "Iuran succesfully retrieved"
                     }
@@ -653,7 +723,13 @@ class Iuran(Resource):
         #     }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
-            'kdiuran', help='This field cannot be blank', required=True)
+            'tahun', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrw', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'kdrt', help='This field cannot be blank', required=True)
+        parser.add_argument(
+            'norumah', help='This field cannot be blank', required=True)
         data = parser.parse_args()
         iuran = models.Iuran()
         try:
