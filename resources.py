@@ -11,11 +11,11 @@ class Login(Resource):
         parser.add_argument(
             'username', help='This field cannot be blank', required=True)
         parser.add_argument(
-            'password', help='This field cannot be blank', required=True)
+            'passwd', help='This field cannot be blank', required=True)
         data = parser.parse_args()
         body = {
             "username": data["username"],
-            "password": data["password"]
+            "passwd": data["passwd"]
         }
         user = models.Warga()
         try:
