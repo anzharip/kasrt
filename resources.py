@@ -35,7 +35,7 @@ class Login(Resource):
                 access_token = create_access_token(
                     identity=norumah, user_claims=user_claims)
                 return {
-                    'message': 'Logged in as {}'.format(data['username']),
+                    'message': 'Logged in as {}'.format(data['kdrw'], data['kdrt'], data['norumah']),
                     'access_token': access_token
                 }
             else:
