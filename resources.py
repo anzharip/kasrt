@@ -240,7 +240,7 @@ class Warga(Resource):
             'norumah', help='This field cannot be blank', required=True, location=["form", "args"])
         data = parser.parse_args()
         try:
-            if data["norumah"] == "all":
+            if data["kdrw"] == "all" and data["kdrt"] == "all" and data["norumah"] == "all":
                 result = []
                 for warga in warga.get_all():
                     result.append(
