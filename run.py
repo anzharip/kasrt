@@ -75,7 +75,7 @@ app.config['JWT_SECRET_KEY'] = config.JWT_SECRET_KEY
 app.config['JWT_ACCESS_TOKEN_EXPIRES'] = config.JWT_ACCESS_TOKEN_EXPIRES
 
 api.add_resource(resources.Login, '/login')
-api.add_resource(resources.RukunTetangga, '/rt')
+# api.add_resource(resources.RukunTetangga, '/rt')
 api.add_resource(resources.Warga, '/warga')
 api.add_resource(resources.Pemasukan, '/pemasukan')
 api.add_resource(resources.Pengeluaran, '/pengeluaran')
