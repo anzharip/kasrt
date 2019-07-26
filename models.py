@@ -49,8 +49,8 @@ class Warga:
         cursor = db.sql_cursor(connection, statement)
         result = cursor.fetchone()
         db.close_connection(connection, cursor)
-        bytes_password = bytes(body["password"], "utf-8")
-        bytes_hashed = bytes(result[1], "utf-8")
+        bytes_password = bytes(body["passwd"], "utf-8")
+        bytes_hashed = bytes(result[3], "utf-8")
         return bcrypt.checkpw(bytes_password, bytes_hashed)
 
     def post(self, body):
