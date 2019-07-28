@@ -1,7 +1,7 @@
 {
 	"info": {
-		"_postman_id": "ffd232ca-7366-4c76-8c61-93d879078f68",
-		"name": "KasRT v1",
+		"_postman_id": "02fa3233-9fd9-4c15-a237-331a6d45ec8b",
+		"name": "KasRT v2",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -19,7 +19,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"username\": \"11\", \n\t\"password\": \"john doe\"\n}"
+					"raw": "{\n\t\"kdrw\": \"01\", \n\t\"kdrt\": \"02\", \n\t\"norumah\": \"00005\", \n\t\"passwd\": \"jane doe\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/login",
@@ -35,123 +35,12 @@
 			"response": []
 		},
 		{
-			"name": "/rt GET",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "localhost:5000/rt?nmrt=all",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"rt"
-					],
-					"query": [
-						{
-							"key": "nmrt",
-							"value": "all"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/rt POST",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"kdrw\": \"1\",\n    \"nmrt\": \"6\",\n    \"alamat\": \"Jiung\"\n}"
-				},
-				"url": {
-					"raw": "localhost:5000/rt",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"rt"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/rt PUT",
-			"request": {
-				"method": "PUT",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"kdrw\": \"1\",\n    \"nmrt\": \"6\",\n    \"alamat\": \"Jiunggg\"\n}"
-				},
-				"url": {
-					"raw": "localhost:5000/rt",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"rt"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "/rt DEL",
-			"request": {
-				"method": "DELETE",
-				"header": [
-					{
-						"key": "Content-Type",
-						"name": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n\t\"nmrt\": \"6\"\n}"
-				},
-				"url": {
-					"raw": "localhost:5000/rt",
-					"host": [
-						"localhost"
-					],
-					"port": "5000",
-					"path": [
-						"rt"
-					]
-				}
-			},
-			"response": []
-		},
-		{
 			"name": "/warga GET",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:5000/warga?norumah=all",
+					"raw": "localhost:5000/warga?kdrw=all&kdrt=all&norumah=all",
 					"host": [
 						"localhost"
 					],
@@ -160,6 +49,14 @@
 						"warga"
 					],
 					"query": [
+						{
+							"key": "kdrw",
+							"value": "all"
+						},
+						{
+							"key": "kdrt",
+							"value": "all"
+						},
 						{
 							"key": "norumah",
 							"value": "all"
@@ -183,7 +80,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nmrt\": \"1\",\n    \"norumah\": \"103\",\n    \"nokk\": \"10102\",\n    \"nmkk\": \"john wick\",\n    \"statustinggal\": \"kontrak\",\n    \"pengurus\": \"0\", \n    \"password\": \"john wick\"\n}"
+					"raw": "{\n    \"kdrw\": \"01\",\n    \"kdrt\": \"02\",\n    \"norumah\": \"00007\",\n    \"nokk\": \"10102\",\n    \"nmkk\": \"jane smith\",\n    \"statustinggal\": \"kontrak\",\n    \"pengurus\": \"0\", \n    \"passwd\": \"jane doe\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/warga",
@@ -212,7 +109,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"nmrt\": \"1\",\n    \"norumah\": \"102\",\n    \"nokk\": \"10101\",\n    \"nmkk\": \"john wick\",\n    \"statustinggal\": \"kontrak\",\n    \"pengurus\": \"0\"\n}"
+					"raw": "{\n    \"kdrw\": \"01\",\n    \"kdrt\": \"02\",\n    \"norumah\": \"00007\",\n    \"nokk\": \"10102\",\n    \"nmkk\": \"jane smith\",\n    \"statustinggal\": \"kontrak\",\n    \"pengurus\": \"1\", \n    \"passwd\": \"jane doe\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/warga",
@@ -241,7 +138,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"norumah\": \"102\"\n}"
+					"raw": "{\n    \"kdrw\": \"01\", \n    \"kdrt\": \"02\", \n    \"norumah\": \"103\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/warga",
@@ -294,7 +191,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"norumah\": \"11\", \n\t\"nokk\": \"0001\", \n\t\"jumlah\": \"100000\", \n\t\"keterangan\": \"nothing\", \n\t\"dokumen_bayar\": \"asdf\"\n}"
+					"raw": "{\n\t\"kdrw\": \"01\",\n\t\"kdrt\": \"02\",\n\t\"norumah\": \"10101\",\n\t\"nokk\": \"0001\", \n\t\"jumlah\": \"100000\", \n\t\"keterangan\": \"nothing\", \n\t\"dokumen_bayar\": \"asdf\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/pemasukan",
@@ -323,7 +220,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"kdpemasukan\": \"15\", \n\t\"terverifikasi\": \"1\"\n}"
+					"raw": "{\n\t\"kdpemasukan\": \"17\", \n\t\"terverifikasi\": \"1\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/pemasukan",
@@ -352,7 +249,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"kdpemasukan\": \"15\"\n}"
+					"raw": "{\n\t\"kdpemasukan\": \"19\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/pemasukan",
@@ -434,7 +331,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"kdpengeluaran\": \"3\"\n}"
+					"raw": "{\n\t\"kdpengeluaran\": \"10\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/pengeluaran",
@@ -487,7 +384,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"tahun\": \"2019\", \n\t\"bulan\": \"jun\", \n\t\"norumah\": \"12\"\n}"
+					"raw": "{\n\t\"tahun\": \"2019\", \n\t\"kdrw\": \"01\", \n\t\"kdrt\": \"01\", \n\t\"norumah\": \"1001\", \n\t\"jan\": \"100000\", \n\t\"feb\": \"200000\", \n\t\"mar\": \"100000\", \n\t\"apr\": \"200000\", \n\t\"may\": \"100000\", \n\t\"jun\": \"200000\", \n\t\"jul\": \"150000\", \n\t\"aug\": \"200000\", \n\t\"sep\": \"100000\", \n\t\"oct\": \"150000\", \n\t\"nop\": \"100000\", \n\t\"des\": \"200000\"\n\t\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/iuran",
@@ -569,7 +466,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"tahunbulan\": \"2019-01\"\n}"
+					"raw": "{\n\t\"tahunbulan\": \"2019-05\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/saldokas",
@@ -585,7 +482,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:5000/saldokas",
+			"name": "/saldokas DEL",
 			"request": {
 				"method": "DELETE",
 				"header": [
@@ -598,7 +495,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"kdsaldo\": \"5\"\n}"
+					"raw": "{\n\t\"kdsaldo\": \"8\"\n}"
 				},
 				"url": {
 					"raw": "localhost:5000/saldokas",
