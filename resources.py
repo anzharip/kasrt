@@ -17,10 +17,6 @@ class Login(Resource):
         parser.add_argument(
             'passwd', help='This field cannot be blank', required=True)
         data = parser.parse_args()
-        # body = {
-        #     "username": data["username"],
-        #     "passwd": data["passwd"]
-        # }
         user = models.Warga()
         try:
             if user.get(data) is None:
@@ -47,158 +43,14 @@ class Login(Resource):
             return {'message': 'Something went wrong'}, 500
 
 
-# class RukunTetangga(Resource):
-#     # @jwt_required
-#     def post(self):
-#         # Only allow Pengurus
-#         # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-#         #     return {
-#         #         "message": "You are not authorized to access this endpoint"
-#         #     }, 401
-#         parser = reqparse.RequestParser()
-#         parser.add_argument(
-#             'kdrw', help='This field cannot be blank', required=True)
-#         parser.add_argument(
-#             'nmrt', help='This field cannot be blank', required=True)
-#         parser.add_argument(
-#             'alamat', help='This field cannot be blank', required=True)
-#         data = parser.parse_args()
-#         body = {
-#             "kdrw": data["kdrw"],
-#             "nmrt": data["nmrt"],
-#             "alamat": data["alamat"]
-#         }
-#         try:
-#             rt = models.RukunTetangga()
-#             rt.post(body)
-#             return {
-#                 "message": "RT succesfully created"
-#             }
-#         except Exception as e:
-#             print(e)
-#             return {'message': 'Something went wrong'}, 500
-
-#     # @jwt_required
-#     def get(self):
-#         # Only allow Pengurus
-#         # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-#         #     return {
-#         #         "message": "You are not authorized to access this endpoint"
-#         #     }, 401
-#         rt = models.RukunTetangga()
-#         parser = reqparse.RequestParser()
-#         parser.add_argument(
-#             'nmrt', help='This field cannot be blank', required=True, location=["form", "args"])
-#         data = parser.parse_args()
-#         try:
-#             if data["nmrt"] == "all":
-#                 result = []
-#                 for rt in rt.get_all():
-#                     result.append(
-#                         {
-#                             "kdrt": str(rt[0]),
-#                             "kdrw": str(rt[1]),
-#                             "nmrt": str(rt[2]),
-#                             "alamat": rt[3]
-#                         }
-#                     )
-#                 return {
-#                     "data": result,
-#                     "message": "RTs succesfully retrieved"
-#                 }
-#             else:
-#                 body = {
-#                     "nmrt": data["nmrt"]
-#                 }
-#                 result = rt.get(body)
-#                 if result is None:
-#                     return {
-#                         "message": "RT not found"
-#                     }, 400
-#                 else:
-#                     return {
-#                         "data": {
-#                             "kdrt": str(result[0]),
-#                             "kdrw": str(result[1]),
-#                             "nmrt": str(result[2]),
-#                             "alamat": result[3]
-#                         },
-#                         "message": "RT succesfully retrieved"
-#                     }
-#         except Exception as e:
-#             print(e)
-#             return {'message': 'Something went wrong'}, 500
-
-#     # @jwt_required
-#     def put(self):
-#         # Only allow Pengurus
-#         # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-#         #     return {
-#         #         "message": "You are not authorized to access this endpoint"
-#         #     }, 401
-#         parser = reqparse.RequestParser()
-#         parser.add_argument(
-#             'nmrt', help='This field cannot be blank', required=True)
-#         parser.add_argument(
-#             'kdrw', help='This field cannot be blank', required=True)
-#         parser.add_argument(
-#             'alamat', help='This field cannot be blank', required=True)
-#         data = parser.parse_args()
-#         rt = models.RukunTetangga()
-#         body = {
-#             "nmrt": data["nmrt"],
-#             "kdrw": data["kdrw"],
-#             "alamat": data["alamat"]
-#         }
-#         try:
-#             if rt.put(body) == 0:
-#                 return {
-#                     "message": "RT not updated, no change found on submitted data or no id found"
-#                 }
-#             else:
-#                 result = {
-#                     "message": "RT succesfully updated"
-#                 }
-#                 return result
-#         except Exception as e:
-#             print(e)
-#             return {'message': 'Something went wrong'}, 500
-
-#     # @jwt_required
-#     def delete(self):
-#         # Only allow Pengurus
-#         # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-#         #     return {
-#         #         "message": "You are not authorized to access this endpoint"
-#         #     }, 401
-#         parser = reqparse.RequestParser()
-#         parser.add_argument(
-#             'nmrt', help='This field cannot be blank', required=True)
-#         data = parser.parse_args()
-#         rt = models.RukunTetangga()
-#         try:
-#             if rt.delete(data) == 0:
-#                 return {
-#                     "message": "No nmrt found"
-#                 }, 400
-#             else:
-#                 result = {
-#                     "message": "RT succesfully deleted"
-#                 }
-#                 return result
-#         except Exception as e:
-#             print(e)
-#             return {'message': 'Something went wrong'}, 500
-
-
 class Warga(Resource):
-    # @jwt_required
+    @jwt_required
     def post(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'kdrw', help='This field cannot be blank', required=True)
@@ -227,13 +79,13 @@ class Warga(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def get(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         warga = models.Warga()
         parser = reqparse.RequestParser()
         parser.add_argument(
@@ -285,13 +137,13 @@ class Warga(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def put(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'kdrw', help='This field cannot be blank', required=True)
@@ -323,13 +175,13 @@ class Warga(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def delete(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'kdrw', help='This field cannot be blank', required=True)
@@ -355,7 +207,7 @@ class Warga(Resource):
 
 
 class Pemasukan(Resource):
-    # @jwt_required
+    @jwt_required
     def post(self):
         # emp_number = get_raw_jwt()['identity']
         parser = reqparse.RequestParser()
@@ -384,7 +236,7 @@ class Pemasukan(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def get(self):
         # norumah = get_raw_jwt()['identity']
         pemasukan = models.Pemasukan()
@@ -440,13 +292,13 @@ class Pemasukan(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def put(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'kdpemasukan', help='This field cannot be blank', required=True)
@@ -468,13 +320,13 @@ class Pemasukan(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def delete(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'kdpemasukan', help='This field cannot be blank', required=True)
@@ -496,13 +348,13 @@ class Pemasukan(Resource):
 
 
 class Pengeluaran(Resource):
-    # @jwt_required
+    @jwt_required
     def post(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'jumlah', help='This field cannot be blank', required=True)
@@ -519,13 +371,8 @@ class Pengeluaran(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def get(self):
-        # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
         pengeluaran = models.Pengeluaran()
         parser = reqparse.RequestParser()
         parser.add_argument(
@@ -567,13 +414,13 @@ class Pengeluaran(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def delete(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'kdpengeluaran', help='This field cannot be blank', required=True)
@@ -595,13 +442,8 @@ class Pengeluaran(Resource):
 
 
 class Iuran(Resource):
-    # @jwt_required
+    @jwt_required
     def post(self):
-        # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'tahun', help='This field cannot be blank', required=True)
@@ -646,13 +488,13 @@ class Iuran(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def get(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         iuran = models.Iuran()
         parser = reqparse.RequestParser()
         parser.add_argument(
@@ -718,13 +560,13 @@ class Iuran(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def delete(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'tahun', help='This field cannot be blank', required=True)
@@ -752,13 +594,13 @@ class Iuran(Resource):
 
 
 class SaldoKas(Resource):
-    # @jwt_required
+    @jwt_required
     def post(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'tahunbulan', help='This field cannot be blank', required=True)
@@ -805,13 +647,8 @@ class SaldoKas(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def get(self):
-        # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
         saldokas = models.SaldoKas()
         parser = reqparse.RequestParser()
         parser.add_argument(
@@ -857,13 +694,13 @@ class SaldoKas(Resource):
             print(e)
             return {'message': 'Something went wrong'}, 500
 
-    # @jwt_required
+    @jwt_required
     def delete(self):
         # Only allow Pengurus
-        # if get_raw_jwt()['user_claims']['pengurus'] == 0:
-        #     return {
-        #         "message": "You are not authorized to access this endpoint"
-        #     }, 401
+        if get_raw_jwt()['user_claims']['pengurus'] == 0:
+            return {
+                "message": "You are not authorized to access this endpoint"
+            }, 401
         parser = reqparse.RequestParser()
         parser.add_argument(
             'kdsaldo', help='This field cannot be blank', required=True)

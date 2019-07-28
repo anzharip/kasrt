@@ -108,69 +108,6 @@ class Warga:
         return cursor.rowcount
 
 
-# class RukunTetangga:
-#     def get(self, body):
-#         field = "`kdrt`, `nmrt`, `kdrw`, `alamat`"
-#         table = "`rt`"
-#         sql_filter = "`nmrt` = '%s'" % body["nmrt"]
-#         statement = "SELECT %s FROM %s WHERE %s LIMIT 0,1" % (
-#             field, table, sql_filter)
-#         connection = db.open_connection()
-#         cursor = db.sql_cursor(connection, statement)
-#         result = cursor.fetchone()
-#         db.close_connection(connection, cursor)
-#         return result
-
-#     def get_all(self):
-#         field = "`kdrt`, `kdrw`, `nmrt`, `alamat`"
-#         table = "`rt`"
-#         statement = "SELECT %s FROM %s LIMIT 0,1000" % (
-#             field, table)
-#         connection = db.open_connection()
-#         cursor = db.sql_cursor(connection, statement)
-#         result = cursor.fetchall()
-#         db.close_connection(connection, cursor)
-#         return result
-
-#     def post(self, body):
-#         field = "(`kdrw`, `nmrt`, `alamat`)"
-#         values = "('%s', '%s', '%s')" % (
-#             body["kdrw"], body["nmrt"], body["alamat"])
-#         table = "`rt`"
-#         statement = "INSERT INTO %s %s VALUES %s" % (
-#             table, field, values)
-#         connection = db.open_connection()
-#         cursor = db.sql_cursor(connection, statement)
-#         connection.commit()
-#         db.close_connection(connection, cursor)
-#         result = cursor.rowcount
-#         return result
-
-#     def put(self, body):
-#         field = "`kdrw`='%s', `alamat`='%s'" % (
-#             body['kdrw'], body['alamat'])
-#         table = "`rt`"
-#         sql_filter = "`nmrt`='%s'" % (body['nmrt'])
-#         statement = "UPDATE %s SET %s WHERE %s" % (
-#             table, field, sql_filter)
-#         connection = db.open_connection()
-#         cursor = db.sql_cursor(connection, statement)
-#         connection.commit()
-#         db.close_connection(connection, cursor)
-#         return cursor.rowcount
-
-#     def delete(self, body):
-#         table = "`rt`"
-#         sql_filter = "`nmrt` = %s" % (body["nmrt"])
-#         statement = "DELETE FROM %s WHERE %s" % (
-#             table, sql_filter)
-#         connection = db.open_connection()
-#         cursor = db.sql_cursor(connection, statement)
-#         connection.commit()
-#         db.close_connection(connection, cursor)
-#         return cursor.rowcount
-
-
 class Pemasukan:
     def get(self, body):
         field = "`kdpemasukan`, `tanggal`, `norumah`, `kdrw`, `kdrt`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`, `terverifikasi`"
