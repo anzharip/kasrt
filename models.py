@@ -196,7 +196,7 @@ class Pemasukan:
         return result
 
     def post(self, body):
-        field = "(`norumah`, `kdrw`, `kdrt`, `nokk`, `jumlah`, `keterangan`, `dokumen_sbayar`)"
+        field = "(`norumah`, `kdrw`, `kdrt`, `nokk`, `jumlah`, `keterangan`, `dokumen_bayar`)"
         values = "('%s', '%s', '%s', '%s', '%s', '%s', '%s')" % (
             body["norumah"], body["kdrw"], body["kdrt"], body["nokk"], body["jumlah"], body["keterangan"], body["dokumen_bayar"],)
         table = "`tr_pemasukan`"
