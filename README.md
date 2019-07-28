@@ -22,6 +22,28 @@ HTTP REST API PoC for KASRT written in Python 3.
 * Auth & Permission for resources.Iuran [done]
 * Auth & Permission for resources.SaldoKas [done]
 
+# Endpoint List
+| No. | Endpoint     | Method | Require JWT | Only for Pengurus |
+|-----|--------------|--------|-------------|-------------------|
+| 1   | /login       | POST   | No          | No                |
+| 2   | /warga       | GET    | Yes         | Yes               |
+| 3   | /warga       | POST   | Yes         | Yes               |
+| 4   | /warga       | PUT    | Yes         | Yes               |
+| 5   | /warga       | DELETE | Yes         | Yes               |
+| 6   | /pemasukan   | GET    | Yes         | No                |
+| 7   | /pemasukan   | POST   | Yes         | No                |
+| 8   | /pemasukan   | PUT    | Yes         | Yes               |
+| 9   | /pemasukan   | DELETE | Yes         | Yes               |
+| 10  | /pengeluaran | GET    | Yes         | No                |
+| 11  | /pengeluaran | POST   | Yes         | Yes               |
+| 12  | /pengeluaran | DELETE | Yes         | Yes               |
+| 13  | /iuran       | GET    | Yes         | No                |
+| 14  | /iuran       | POST   | Yes         | Yes               |
+| 15  | /iuran       | DELETE | Yes         | Yes               |
+| 16  | /saldokas    | GET    | Yes         | No                |
+| 17  | /saldokas    | POST   | Yes         | Yes               |
+| 18  | /saldokas    | DELETE | Yes         | Yes               |
+
 # To use: 
 1. Clone the repo. 
 
